@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './sections/HeroSection';
 import BrandStatementSection from './sections/BrandStatementSection';
+import FoodDiscoverySection from './sections/FoodDiscoverySection';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <HeroSection />
       <BrandStatementSection />
+      <FoodDiscoverySection />
     </div>
   );
 }
