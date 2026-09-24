@@ -46,6 +46,18 @@ const FoodDiscoverySection = () => {
     }
   };
 
+  const scrollToMenuCategory = (catId) => {
+    const el = document.getElementById(`menu-${catId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToFullMenu = () => {
+    const el = document.getElementById('full-menu');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const activeCategory = categories[activeIndex];
 
   return (
@@ -202,13 +214,13 @@ const FoodDiscoverySection = () => {
 
                   {/* Editorial CTA */}
                   <div className="pt-6">
-                    <a
-                      href="/menu"
+                    <button
+                      onClick={() => scrollToMenuCategory(activeCategory.id)}
                       className="group inline-flex items-center gap-3 text-base font-bold font-mono tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
                     >
                       <span>{activeCategory.cta}</span>
                       <ArrowRight className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 text-brand-wood" />
-                    </a>
+                    </button>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -334,13 +346,13 @@ const FoodDiscoverySection = () => {
 
             {/* CTA */}
             <div className="pt-2">
-              <a
-                href="/menu"
+              <button
+                onClick={() => scrollToMenuCategory(cat.id)}
                 className="group inline-flex items-center gap-2.5 text-sm font-bold font-mono tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
               >
                 <span>{cat.cta}</span>
                 <ArrowRight className="w-4 h-4 text-brand-wood transition-transform group-hover:translate-x-1.5" />
-              </a>
+              </button>
             </div>
           </div>
         ))}
@@ -368,13 +380,13 @@ const FoodDiscoverySection = () => {
             FAVOURITE.
           </h2>
 
-          <a
-            href="/menu"
+          <button
+            onClick={scrollToFullMenu}
             className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 bg-brand-cream text-brand-green font-mono font-bold text-sm md:text-base tracking-[0.15em] uppercase rounded-full hover:bg-brand-wood hover:text-brand-white transition-all duration-300 shadow-xl"
           >
             <span>VIEW FULL MENU</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
-          </a>
+          </button>
         </div>
       </div>
 
