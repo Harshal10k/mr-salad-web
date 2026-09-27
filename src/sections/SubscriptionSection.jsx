@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SUBSCRIPTION_PRICING, getWhatsAppEnquiryUrl } from '../config/brand';
-import CalendarHorizontalSection from '../components/CalendarHorizontalSection';
+import { SUBSCRIPTION_SCHEDULE } from '../data/subscriptionData';
 
 export default function SubscriptionSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,35 +118,76 @@ export default function SubscriptionSection() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ── 26-DAY MEAL CALENDAR (FULL-WIDTH STICKY HORIZONTAL SCROLL) ── */}
-      <div className="mt-16 pt-12 border-t border-brand-black/10">
-        <CalendarHorizontalSection />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mt-12">
-        {/* Bottom Callout banner (below the sticky scroll track) */}
-        <div className="bg-brand-black text-white rounded-3xl p-7 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 overflow-hidden relative">
-          <div className="absolute -right-8 -bottom-8 w-56 h-56 bg-brand-green/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10">
-            <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">Start Today</span>
-            <h4 className="font-display text-2xl sm:text-3xl font-black text-white mt-1 leading-tight">
-              Ready to transform your daily food routine?
-            </h4>
-            <p className="text-xs sm:text-sm text-white/55 mt-2 max-w-xl leading-relaxed">
-              Chat directly with Mr. Salad on WhatsApp to choose your start date, confirm current pricing, and customize for your diet.
+        {/* ── 26-DAY MEAL CALENDAR ── */}
+        <div className="mt-16 pt-12 border-t border-brand-black/10">
+          <div className="mb-8">
+            <span className="text-xs font-mono font-bold text-brand-green uppercase tracking-wider">
+              Full Curriculum
+            </span>
+            <h3 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-brand-black uppercase mt-1">
+              26-Day Meal Calendar
+            </h3>
+            <p className="text-sm text-brand-black/60 mt-1">
+              Explore what you eat each day. All meals are prepared fresh in Nagpur.
             </p>
           </div>
-          <button
-            onClick={() => {
-              setLeadForm((prev) => ({ ...prev, plan: '26-Day Wellness Plan' }));
-              setIsModalOpen(true);
-            }}
-            className="relative z-10 px-8 py-4 rounded-full text-xs font-bold tracking-wider uppercase bg-brand-green text-white hover:bg-white hover:text-brand-green transition-all shadow-lg shrink-0 cursor-pointer"
-          >
-            SUBSCRIBE NOW →
-          </button>
+
+          {/* Two-Column Simple Bulleted Day List */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {[SUBSCRIPTION_SCHEDULE.slice(0, 13), SUBSCRIPTION_SCHEDULE.slice(13)].map((columnMeals, colIdx) => (
+              <ul
+                key={colIdx}
+                className="bg-brand-cream/35 border border-brand-black/10 rounded-2xl divide-y divide-brand-black/8 overflow-hidden shadow-xs"
+              >
+                {columnMeals.map((item) => {
+                  const dayStr = item.day < 10 ? `0${item.day}` : item.day;
+                  return (
+                    <li
+                      key={item.day}
+                      className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 sm:py-3 hover:bg-brand-white/80 transition-colors group"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="w-2 h-2 rounded-full bg-brand-green shrink-0 group-hover:scale-125 transition-transform" />
+                        <span className="text-xs sm:text-sm font-medium text-brand-black truncate">
+                          <span className="font-mono font-bold text-brand-black">Day {dayStr}</span>
+                          <span className="text-brand-black/40 mx-2">—</span>
+                          <span className="text-brand-black/90 group-hover:text-brand-green transition-colors">
+                            {item.title}
+                          </span>
+                        </span>
+                      </div>
+                      <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-brand-black/45 bg-brand-white/80 border border-brand-black/10 px-2.5 py-0.5 rounded-full shrink-0">
+                        {item.type}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ))}
+          </div>
+
+          {/* Bottom Callout banner */}
+          <div className="mt-12 bg-brand-black text-white rounded-3xl p-7 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 overflow-hidden relative">
+            <div className="absolute -right-8 -bottom-8 w-56 h-56 bg-brand-green/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10">
+              <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">Start Today</span>
+              <h4 className="font-display text-2xl sm:text-3xl font-black text-white mt-1 leading-tight">
+                Ready to transform your daily food routine?
+              </h4>
+              <p className="text-xs sm:text-sm text-white/55 mt-2 max-w-xl leading-relaxed">
+                Chat directly with Mr. Salad on WhatsApp to choose your start date, confirm current pricing, and customize for your diet.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setLeadForm((prev) => ({ ...prev, plan: '26-Day Wellness Plan' }));
+                setIsModalOpen(true);
+              }}
+              className="relative z-10 px-8 py-4 rounded-full text-xs font-bold tracking-wider uppercase bg-brand-green text-white hover:bg-white hover:text-brand-green transition-all shadow-lg shrink-0 cursor-pointer"
+            >
+              SUBSCRIBE NOW →
+            </button>
+          </div>
         </div>
       </div>
 
