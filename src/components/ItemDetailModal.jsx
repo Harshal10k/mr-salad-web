@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZOMATO_URL, SWIGGY_URL } from '../config/brand';
 import VegBadge from './VegBadge';
@@ -21,6 +21,12 @@ const NutritionStat = ({ value, unit, label }) => {
 };
 
 const ItemDetailModal = ({ item, addOns = [], onClose }) => {
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [item?.id, item?.image]);
+
   // Close on ESC
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
@@ -35,6 +41,8 @@ const ItemDetailModal = ({ item, addOns = [], onClose }) => {
   }, []);
 
   const hasNutrition = item.cal != null || item.protein != null || item.fat != null || item.carb != null;
+  const imageSrc = item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : '';
+  const showFallback = imgError || !imageSrc;
 
   return (
     <AnimatePresence>
@@ -57,16 +65,23 @@ const ItemDetailModal = ({ item, addOns = [], onClose }) => {
           className="bg-brand-white rounded-t-3xl md:rounded-3xl w-full md:max-w-lg overflow-y-auto max-h-[92svh] border border-brand-black/10 shadow-2xl"
         >
           {/* Image */}
-          <div className="relative w-full aspect-[4/3] bg-brand-cream overflow-hidden rounded-t-3xl">
-            <img
-              src={item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : ''}
-              alt={item.name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.parentElement.classList.add('bg-brand-black/5');
-              }}
-            />
+          <div className={`relative w-full aspect-[4/3] bg-brand-cream overflow-hidden rounded-t-3xl ${showFallback ? 'border-b border-brand-green/25' : ''}`}>
+            {showFallback ? (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-brand-cream p-6">
+                <img
+                  src="/images/logo.jpg"
+                  alt="Mr. Salad"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-sm border border-brand-green/25"
+                />
+              </div>
+            ) : (
+              <img
+                src={imageSrc}
+                alt={item.name}
+                className="w-full h-full object-cover"
+                onError={() => setImgError(true)}
+              />
+            )}
             {/* Close button */}
             <button
               onClick={onClose}

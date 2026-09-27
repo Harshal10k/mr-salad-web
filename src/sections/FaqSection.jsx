@@ -49,7 +49,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faq" className="relative bg-brand-cream text-brand-black py-20 md:py-28 border-t border-brand-black/10">
+    <section id="faq" className="relative bg-brand-white text-brand-black py-20 md:py-28 border-t border-brand-black/10">
       <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -71,7 +71,7 @@ export default function FaqSection() {
             return (
               <div
                 key={item.q}
-                className="bg-brand-white rounded-2xl border border-brand-black/10 overflow-hidden transition-all duration-200 shadow-xs"
+                className="bg-brand-cream rounded-2xl border border-brand-black/10 overflow-hidden transition-all duration-200 shadow-xs"
               >
                 <button
                   onClick={() => toggleItem(idx)}

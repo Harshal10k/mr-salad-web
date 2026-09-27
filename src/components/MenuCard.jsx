@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import VegBadge from './VegBadge';
 
 const MenuCard = ({ item, onOpen }) => {
+  const [imgError, setImgError] = useState(false);
   const hasNutrition = item.cal != null || item.protein != null || item.fat != null || item.carb != null;
+  const imageSrc = item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : '';
+  const showFallback = imgError || !imageSrc;
 
   return (
     <motion.article
@@ -20,17 +23,24 @@ const MenuCard = ({ item, onOpen }) => {
     >
       <div>
         {/* Food Image */}
-        <div className="relative overflow-hidden rounded-xl bg-brand-cream aspect-[4/3] mb-3.5">
-          <img
-            src={item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : ''}
-            alt={item.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.parentElement.classList.add('bg-brand-black/5');
-            }}
-          />
+        <div className={`relative overflow-hidden rounded-xl bg-brand-cream aspect-[4/3] mb-3.5 ${showFallback ? 'border border-brand-green/25' : ''}`}>
+          {showFallback ? (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-brand-cream p-4">
+              <img
+                src="/images/logo.jpg"
+                alt="Mr. Salad"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xs border border-brand-green/25"
+              />
+            </div>
+          ) : (
+            <img
+              src={imageSrc}
+              alt={item.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              onError={() => setImgError(true)}
+            />
+          )}
           <div className="absolute top-2.5 left-2.5">
             <VegBadge isVeg={item.veg} />
           </div>

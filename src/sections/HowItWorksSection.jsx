@@ -121,7 +121,7 @@ export default function HowItWorksSection() {
     <section
       id="how-it-works"
       ref={containerRef}
-      className="relative bg-brand-cream text-brand-black py-24 md:py-32 border-t border-brand-black/10"
+      className="relative bg-brand-white text-brand-black py-24 md:py-32 border-t border-brand-black/10"
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}

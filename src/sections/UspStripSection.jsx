@@ -46,7 +46,7 @@ const USP_ITEMS = [
 
 export default function UspStripSection() {
   return (
-    <section className="relative z-20 border-y border-brand-black/10 bg-brand-cream/80 backdrop-blur-sm">
+    <section className="relative z-20 border-y border-brand-black/10 bg-brand-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 md:py-10">
         {/* Desktop: 4 columns in 1 horizontal row | Mobile: 2x2 grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 divide-y-0">
