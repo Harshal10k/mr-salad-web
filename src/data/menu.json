@@ -1,0 +1,64 @@
+{
+  "brand": {
+    "name": "Mr. Salad",
+    "tagline": "The Diet Studio",
+    "area": "Bajaj Nagar, Nagpur",
+    "whatsapp": "919158604768",
+    "instagram": "mr_salad24"
+  },
+  "categories": ["Salads", "Bowls", "Juices", "Snacks", "Between Bread", "Get Going"],
+  "addOns": [
+    { "name": "Whey Protein", "price": 40, "appliesTo": "Bowls" },
+    { "name": "Oats", "price": 40, "appliesTo": "Bowls" }
+  ],
+  "items": [
+    { "id": "sprout-delight", "name": "Sprout Delight", "category": "Salads", "price": 149, "veg": true, "cal": 433, "protein": 27.4, "fat": 15.8, "carb": 47.4, "image": "sprout-delight.jpg" },
+    { "id": "cheese-corn-paneer", "name": "Cheese Corn Paneer", "category": "Salads", "price": 159, "veg": true, "cal": 363.6, "protein": 20.1, "fat": 22.8, "carb": 20.3, "image": "cheese-corn-paneer.jpg" },
+    { "id": "high-protein", "name": "High Protein", "category": "Salads", "price": 159, "veg": true, "cal": 500, "protein": 29.3, "fat": 22.3, "carb": 45.5, "image": "high-protein.jpg" },
+    { "id": "protein-punch-paneer", "name": "Protein Punch Paneer", "category": "Salads", "price": 159, "veg": true, "cal": 377, "protein": 29.5, "fat": 22.5, "carb": 16.9, "image": "protein-punch-paneer.jpg" },
+    { "id": "chickpea", "name": "Chickpea", "category": "Salads", "price": 149, "veg": true, "cal": 411, "protein": 23.5, "fat": 13, "carb": 54.3, "image": "chickpea.jpg" },
+    { "id": "grilled-paneer", "name": "Grilled Paneer", "category": "Salads", "price": 159, "veg": true, "cal": 351.9, "protein": 21.8, "fat": 23.2, "carb": 14.5, "image": "grilled-paneer.jpg" },
+    { "id": "black-channa", "name": "Black Channa", "category": "Salads", "price": 149, "veg": true, "cal": 454, "protein": 22.7, "fat": 16.6, "carb": 52.5, "image": "black-channa.jpg" },
+    { "id": "kidney-beans", "name": "Kidney Beans", "category": "Salads", "price": 149, "veg": true, "cal": 320.4, "protein": 21.6, "fat": 5.3, "carb": 49.4, "image": "kidney-beans.jpg" },
+    { "id": "cabbage-apple", "name": "Cabbage Apple", "category": "Salads", "price": 159, "veg": true, "cal": 322, "protein": 12.3, "fat": 22.6, "carb": 19.7, "image": "cabbage-apple.jpg" },
+    { "id": "stir-veggies", "name": "Stir Veggies", "category": "Salads", "price": 159, "veg": true, "cal": 201.7, "protein": 12.7, "fat": 11.7, "carb": 12.8, "image": "stir-veggies.jpg" },
+    { "id": "quinoa-tofu", "name": "Quinoa Tofu", "category": "Salads", "price": 159, "veg": true, "cal": 291, "protein": 15.5, "fat": 10.6, "carb": 36.6, "image": "quinoa-tofu.jpg" },
+    { "id": "soya-chunks", "name": "Soya Chunks", "category": "Salads", "price": 149, "veg": true, "cal": 212.2, "protein": 26, "fat": 4.2, "carb": 26, "image": "soya-chunks.jpg" },
+    { "id": "black-eyed-peas", "name": "Black Eyed Peas", "category": "Salads", "price": 149, "veg": true, "cal": 390, "protein": 25.1, "fat": 15.8, "carb": 45.1, "image": "black-eyed-peas.jpg" },
+    { "id": "egg-salad", "name": "Egg Salad", "category": "Salads", "price": 149, "veg": false, "cal": 329.6, "protein": 26.7, "fat": 21.2, "carb": 8.9, "image": "egg-salad.jpg" },
+    { "id": "fruit-salad", "name": "Fruit Salad", "category": "Salads", "price": 149, "veg": true, "cal": null, "protein": null, "fat": null, "carb": null, "image": "fruit-salad.jpg" },
+
+    { "id": "blush-smoothie", "name": "Blush Smoothie", "category": "Bowls", "price": 159, "veg": true, "cal": 703, "protein": 15.2, "fat": 23.9, "carb": 123, "image": "blush-smoothie.jpg" },
+    { "id": "chocolate-smoothie", "name": "Chocolate Smoothie", "category": "Bowls", "price": 159, "veg": true, "cal": 694, "protein": 7.8, "fat": 12.9, "carb": 153, "image": "chocolate-smoothie.jpg" },
+    { "id": "mari-gold-smoothie", "name": "Mari Gold Smoothie", "category": "Bowls", "price": 159, "veg": true, "cal": 361, "protein": 3.6, "fat": 2, "carb": 86.7, "image": "mari-gold-smoothie.jpg" },
+    { "id": "spinach-smoothie", "name": "Spinach Smoothie", "category": "Bowls", "price": 159, "veg": true, "cal": 813, "protein": 12.3, "fat": 15.3, "carb": 167, "image": "spinach-smoothie.jpg" },
+    { "id": "caramel-smoothie", "name": "Caramel Smoothie", "category": "Bowls", "price": 159, "veg": true, "cal": 689, "protein": 14, "fat": 32.6, "carb": 99.2, "image": "caramel-smoothie.jpg" },
+
+    { "id": "juice-abc", "name": "ABC", "category": "Juices", "price": 80, "veg": true, "image": "juice-abc.jpg" },
+    { "id": "juice-green", "name": "Green", "category": "Juices", "price": 80, "veg": true, "image": "juice-green.jpg" },
+    { "id": "juice-orange", "name": "Orange", "category": "Juices", "price": 80, "veg": true, "image": "juice-orange.jpg" },
+    { "id": "juice-carrot", "name": "Carrot", "category": "Juices", "price": 80, "veg": true, "image": "juice-carrot.jpg" },
+    { "id": "juice-apple", "name": "Apple", "category": "Juices", "price": 80, "veg": true, "image": "juice-apple.jpg" },
+    { "id": "juice-pine-apple", "name": "Pine Apple", "category": "Juices", "price": 80, "veg": true, "image": "juice-pine-apple.jpg" },
+    { "id": "juice-papaya", "name": "Papaya", "category": "Juices", "price": 80, "veg": true, "image": "juice-papaya.jpg" },
+
+    { "id": "poha", "name": "Poha", "category": "Snacks", "price": 30, "veg": true, "image": "poha.jpg" },
+    { "id": "sprout-idli", "name": "Sprout Idli", "category": "Snacks", "price": 40, "veg": true, "image": "sprout-idli.jpg" },
+    { "id": "sprout-appe", "name": "Sprout Appe", "category": "Snacks", "price": 40, "veg": true, "image": "sprout-appe.jpg" },
+    { "id": "sprout-chilla", "name": "Sprout Chilla", "category": "Snacks", "price": 50, "veg": true, "image": "sprout-chilla.jpg" },
+    { "id": "sprout-uttapam", "name": "Sprout Uttapam", "category": "Snacks", "price": 50, "veg": true, "image": "sprout-uttapam.jpg" },
+    { "id": "upma", "name": "Upma", "category": "Snacks", "price": 50, "veg": true, "image": "upma.jpg" },
+    { "id": "chatpata-chana", "name": "Chatpata Chana", "category": "Snacks", "price": 79, "veg": true, "image": "chatpata-chana.jpg" },
+    { "id": "chatpata-corn", "name": "Chatpata Corn", "category": "Snacks", "price": 79, "veg": true, "image": "chatpata-corn.jpg" },
+    { "id": "boiled-egg", "name": "Boiled Egg (3 pcs)", "category": "Snacks", "price": 50, "veg": false, "image": "boiled-egg.jpg" },
+
+    { "id": "peanut-butter-bread", "name": "Peanuts Butter Bread", "category": "Between Bread", "price": 80, "veg": true, "image": "peanut-butter-bread.jpg" },
+    { "id": "egg-bhurji-bread", "name": "Egg Bhurji Bread", "category": "Between Bread", "price": 80, "veg": false, "image": "egg-bhurji-bread.jpg" },
+    { "id": "paneer-bhurji-bread", "name": "Paneer Bhurji Bread", "category": "Between Bread", "price": 100, "veg": true, "image": "paneer-bhurji-bread.jpg" },
+    { "id": "egg-toast", "name": "Egg Toast", "category": "Between Bread", "price": 100, "veg": false, "image": "egg-toast.jpg" },
+
+    { "id": "beetroot-booster-shot", "name": "Beetroot Booster Shot", "category": "Get Going", "price": 69, "veg": true, "image": "beetroot-booster-shot.jpg" },
+    { "id": "carrot-booster-shot", "name": "Carrot Booster Shot", "category": "Get Going", "price": 69, "veg": true, "image": "carrot-booster-shot.jpg" },
+    { "id": "orange-booster-shot", "name": "Orange Booster Shot", "category": "Get Going", "price": 69, "veg": true, "image": "orange-booster-shot.jpg" }
+  ]
+}
