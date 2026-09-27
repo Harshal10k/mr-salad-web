@@ -73,10 +73,10 @@ export default function CalendarHorizontalSection() {
 
         {/* Top row: Day label + Category badge */}
         <div className="relative z-10 flex items-center justify-between mb-auto">
-          <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-brand-black/40">
+          <span className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase text-brand-black/40">
             Day {dayStr}
           </span>
-          <span className="text-[9px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border border-brand-green/30 text-brand-green bg-brand-green/5">
+          <span className="text-[9px] font-sans font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border border-brand-green/30 text-brand-green bg-brand-green/5">
             {meal.type}
           </span>
         </div>
@@ -89,7 +89,7 @@ export default function CalendarHorizontalSection() {
         </div>
 
         {/* Bottom: dot indicators */}
-        <div className="relative z-10 flex items-center gap-3 pt-3 border-t border-brand-black/[0.06] text-[9px] font-mono uppercase tracking-wider text-brand-black/35">
+        <div className="relative z-10 flex items-center gap-3 pt-3 border-t border-brand-black/[0.06] text-[9px] font-sans uppercase tracking-wider text-brand-black/35">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-green flex-shrink-0" />
             Fresh
@@ -115,7 +115,7 @@ export default function CalendarHorizontalSection() {
             <div>
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
-                <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
+                <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
                   26 Days · Zero Repetition
                 </span>
               </div>
@@ -127,16 +127,16 @@ export default function CalendarHorizontalSection() {
             {/* Progress counter & Scroll prompt */}
             <div className="flex items-center gap-5 self-start sm:self-end">
               <div className="flex items-baseline gap-1">
-                <span className="font-mono text-base font-black text-brand-green">
+                <span className="font-sans text-base font-black text-brand-green">
                   DAY {currentDayEstimate < 10 ? `0${currentDayEstimate}` : currentDayEstimate}
                 </span>
-                <span className="font-mono text-xs text-brand-black/40">/ 26</span>
+                <span className="font-sans text-xs text-brand-black/40">/ 26</span>
               </div>
 
               <div className="h-4 w-px bg-brand-black/15" />
 
               <div className="flex items-center gap-2.5">
-                <span className="font-mono text-xs uppercase tracking-wider text-brand-black/50 select-none">
+                <span className="font-sans text-xs uppercase tracking-wider text-brand-black/50 select-none">
                   SCROLL ↓
                 </span>
                 {/* Horizontal progress bar */}
@@ -171,7 +171,7 @@ export default function CalendarHorizontalSection() {
         </div>
 
         {/* ── BOTTOM INFO BAR ── */}
-        <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex-shrink-0 pt-3 border-t border-brand-black/5 flex items-center justify-between text-xs text-brand-black/50 font-mono">
+        <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex-shrink-0 pt-3 border-t border-brand-black/5 flex items-center justify-between text-xs text-brand-black/50 font-sans">
           <span className="hidden sm:inline">Row 1: Days 01–13 · Row 2: Days 14–26</span>
           <span className="flex items-center gap-2 text-brand-green font-bold">
             <span>●</span> Monday to Friday Meal Rotations

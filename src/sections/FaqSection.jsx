@@ -53,7 +53,7 @@ export default function FaqSection() {
       <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
+          <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
             Questions & Answers
           </span>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-brand-black uppercase mt-2">
@@ -82,7 +82,7 @@ export default function FaqSection() {
                     {item.q}
                   </span>
                   <span
-                    className={`shrink-0 w-7 h-7 rounded-full bg-brand-black/5 flex items-center justify-center font-mono text-xs transition-transform duration-200 ${
+                    className={`shrink-0 w-7 h-7 rounded-full bg-brand-black/5 flex items-center justify-center font-sans text-xs transition-transform duration-200 ${
                       isOpen ? 'rotate-180 bg-brand-green text-white' : 'text-brand-black/60'
                     }`}
                   >

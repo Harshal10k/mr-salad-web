@@ -30,7 +30,7 @@ export default function SubscriptionSection() {
           <div className="lg:col-span-7">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
-              <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
+              <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
                 The Diet Studio Signature
               </span>
             </div>
@@ -63,7 +63,7 @@ export default function SubscriptionSection() {
               <div className="absolute -right-12 -top-12 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none" />
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-white/70">
+                  <span className="text-[11px] font-sans font-bold tracking-widest uppercase text-white/70">
                     FULL PROTOCOL
                   </span>
                   <span className="px-3 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
@@ -82,7 +82,7 @@ export default function SubscriptionSection() {
                       ₹{SUBSCRIPTION_PRICING.fullPlanPrice}
                     </span>
                   ) : (
-                    <div className="inline-block px-3.5 py-1.5 rounded-lg bg-white/15 border border-white/25 text-xs font-mono font-bold text-white tracking-wide">
+                    <div className="inline-block px-3.5 py-1.5 rounded-lg bg-white/15 border border-white/25 text-xs font-sans font-bold text-white tracking-wide">
                       PRICE TO BE CONFIRMED
                     </div>
                   )}
@@ -121,18 +121,18 @@ export default function SubscriptionSection() {
         {/* ── 26-DAY MEAL CALENDAR ── */}
         <div className="mt-16 pt-12 border-t border-brand-black/10">
           <div className="mb-8">
-            <span className="text-xs font-mono font-bold text-brand-green uppercase tracking-wider">
-              Full Curriculum
+            <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
+              Meal Calendar
             </span>
-            <h3 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-brand-black uppercase mt-1">
-              26-Day Meal Calendar
+            <h3 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-brand-black uppercase mt-2">
+              26 Days. One Meal at a Time.
             </h3>
-            <p className="text-sm text-brand-black/60 mt-1">
-              Explore what you eat each day. All meals are prepared fresh in Nagpur.
+            <p className="mt-2 text-sm text-brand-black/60 max-w-xl">
+              Explore every day's meal. All prepared fresh in Nagpur — zero repetition, zero deep frying.
             </p>
           </div>
 
-          {/* Two-Column Simple Bulleted Day List */}
+          {/* Two-Column Simple Bulleted Day List (Complete 01 to 26) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {[SUBSCRIPTION_SCHEDULE.slice(0, 13), SUBSCRIPTION_SCHEDULE.slice(13)].map((columnMeals, colIdx) => (
               <ul
@@ -147,16 +147,15 @@ export default function SubscriptionSection() {
                       className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 sm:py-3 hover:bg-brand-white/80 transition-colors group"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <span className="w-2 h-2 rounded-full bg-brand-green shrink-0 group-hover:scale-125 transition-transform" />
-                        <span className="text-xs sm:text-sm font-medium text-brand-black truncate">
-                          <span className="font-mono font-bold text-brand-black">Day {dayStr}</span>
-                          <span className="text-brand-black/40 mx-2">—</span>
-                          <span className="text-brand-black/90 group-hover:text-brand-green transition-colors">
-                            {item.title}
-                          </span>
+                        {/* Visually distinct dark-green semibold pill */}
+                        <span className="font-sans text-[11px] sm:text-xs font-semibold tracking-wider text-brand-white bg-brand-green px-2.5 py-0.5 rounded-full shrink-0 shadow-xs">
+                          Day {dayStr}
+                        </span>
+                        <span className="text-xs sm:text-sm font-normal text-brand-black/90 truncate group-hover:text-brand-green transition-colors">
+                          {item.title}
                         </span>
                       </div>
-                      <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-brand-black/45 bg-brand-white/80 border border-brand-black/10 px-2.5 py-0.5 rounded-full shrink-0">
+                      <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-wider text-brand-black/45 bg-brand-white/80 border border-brand-black/10 px-2.5 py-0.5 rounded-full shrink-0">
                         {item.type}
                       </span>
                     </li>
@@ -166,11 +165,11 @@ export default function SubscriptionSection() {
             ))}
           </div>
 
-          {/* Bottom Callout banner */}
+          {/* Bottom Callout banner (Renders AFTER the complete 26-day list) */}
           <div className="mt-12 bg-brand-black text-white rounded-3xl p-7 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 overflow-hidden relative">
             <div className="absolute -right-8 -bottom-8 w-56 h-56 bg-brand-green/10 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10">
-              <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">Start Today</span>
+              <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">Start Today</span>
               <h4 className="font-display text-2xl sm:text-3xl font-black text-white mt-1 leading-tight">
                 Ready to transform your daily food routine?
               </h4>
@@ -209,7 +208,7 @@ export default function SubscriptionSection() {
               className="bg-brand-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-brand-black/10 shadow-2xl overflow-y-auto max-h-[90vh]"
             >
               <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
+                <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
                   Subscription Enquiry
                 </span>
                 <button

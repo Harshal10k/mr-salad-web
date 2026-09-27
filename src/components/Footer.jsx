@@ -34,7 +34,7 @@ export default function Footer() {
             New menus, seasonal drops &amp; wellness tips.
           </p>
           {subscribed ? (
-            <span className="text-xs font-mono font-bold text-brand-green tracking-widest uppercase">
+            <span className="text-xs font-sans font-bold text-brand-green tracking-widest uppercase">
               ✓ You're in!
             </span>
           ) : (
@@ -84,14 +84,14 @@ export default function Footer() {
               Wholesome salads, superfood bowls &amp; clean meals.
               Zero deep-frying. Delivered fresh daily.
             </p>
-            <p className="mt-4 text-[10px] font-mono uppercase tracking-[0.18em] text-brand-black/25">
+            <p className="mt-4 text-[10px] font-sans uppercase tracking-[0.18em] text-brand-black/25">
               Bajaj Nagar, Nagpur
             </p>
           </div>
 
           {/* Col 2 — Explore */}
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-mono mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-sans mb-4">
               Explore
             </h4>
             <ul className="space-y-2.5 text-sm text-brand-black/55">
@@ -120,7 +120,7 @@ export default function Footer() {
 
           {/* Col 3 — Order */}
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-mono mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-sans mb-4">
               Order
             </h4>
             <ul className="space-y-2.5 text-sm text-brand-black/55">
@@ -150,7 +150,7 @@ export default function Footer() {
 
           {/* Col 4 — Connect */}
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-mono mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-black/30 font-sans mb-4">
               Connect
             </h4>
             <ul className="space-y-2.5 text-sm text-brand-black/55">
@@ -176,7 +176,7 @@ export default function Footer() {
       </div>
 
       {/* ── COPYRIGHT BAR ─────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-5 border-t border-brand-black/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-brand-black/40 font-mono">
+      <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-5 border-t border-brand-black/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-brand-black/40 font-sans">
         <span>© {year} Mr. Salad — The Diet Studio</span>
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <span>Nagpur, Maharashtra</span>

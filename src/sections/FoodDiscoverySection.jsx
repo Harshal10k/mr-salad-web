@@ -69,13 +69,13 @@ const FoodDiscoverySection = () => {
       <div className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-between px-6 sm:px-12 md:px-20 lg:px-24 pt-28 md:pt-36 pb-16 border-b border-brand-cream/10">
         
         {/* Subtle decorative editorial watermark */}
-        <div className="absolute top-12 right-6 md:right-16 select-none pointer-events-none opacity-5 font-mono text-[10vw] md:text-[8vw] leading-none text-brand-cream font-bold">
+        <div className="absolute top-12 right-6 md:right-16 select-none pointer-events-none opacity-5 font-sans text-[10vw] md:text-[8vw] leading-none text-brand-cream font-bold">
           02
         </div>
 
         {/* Eyebrow Label */}
         <div className="mb-8 md:mb-12">
-          <p className="font-mono text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium">
+          <p className="font-sans text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium">
             Food Discovery
           </p>
         </div>
@@ -91,13 +91,13 @@ const FoodDiscoverySection = () => {
 
         {/* Supporting Text & Divider */}
         <div className="pt-12 md:pt-16 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
-          <div className="space-y-1 text-brand-cream/75 font-mono text-sm md:text-base leading-relaxed">
+          <div className="space-y-1 text-brand-cream/75 font-sans text-sm md:text-base leading-relaxed">
             <p>Fresh food.</p>
             <p>Simple choices.</p>
             <p className="text-brand-cream font-medium">Made for your everyday.</p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs md:text-sm font-mono text-brand-cream/40 uppercase tracking-widest">
+          <div className="flex items-center gap-3 text-xs md:text-sm font-sans text-brand-cream/40 uppercase tracking-widest">
             <span>Scroll to discover</span>
             <span className="inline-block animate-pulse">↓</span>
           </div>
@@ -113,7 +113,7 @@ const FoodDiscoverySection = () => {
         className="sticky top-0 z-30 w-full bg-brand-green/95 backdrop-blur-md border-b border-brand-cream/10 px-6 sm:px-12 md:px-20 lg:px-24 py-4 md:py-5"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar gap-6 md:gap-10">
-          <span className="hidden md:inline-block font-mono text-xs uppercase tracking-[0.2em] text-brand-cream/40 shrink-0">
+          <span className="hidden md:inline-block font-sans text-xs uppercase tracking-[0.2em] text-brand-cream/40 shrink-0">
             Categories ({categories.length})
           </span>
 
@@ -124,7 +124,7 @@ const FoodDiscoverySection = () => {
                 <button
                   key={cat.id}
                   onClick={() => scrollToCategory(idx)}
-                  className={`group relative text-xs md:text-sm uppercase tracking-[0.15em] font-mono transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
+                  className={`group relative text-xs md:text-sm uppercase tracking-[0.15em] font-sans transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
                     isActive ? 'text-brand-cream font-bold' : 'text-brand-cream/50 hover:text-brand-cream/80'
                   }`}
                 >
@@ -176,11 +176,11 @@ const FoodDiscoverySection = () => {
                 >
                   {/* Category Number */}
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xl text-brand-wood font-medium tracking-wider">
+                    <span className="font-sans text-xl text-brand-wood font-medium tracking-wider">
                       {activeCategory.number}
                     </span>
                     <span className="h-[1px] w-8 bg-brand-wood/40" />
-                    <span className="font-mono text-xs uppercase tracking-widest text-brand-cream/50">
+                    <span className="font-sans text-xs uppercase tracking-widest text-brand-cream/50">
                       {activeCategory.tagline}
                     </span>
                   </div>
@@ -197,14 +197,14 @@ const FoodDiscoverySection = () => {
 
                   {/* Authentic Menu Samples from menu.json */}
                   <div className="pt-2">
-                    <p className="font-mono text-xs uppercase tracking-widest text-brand-cream/40 mb-2">
+                    <p className="font-sans text-xs uppercase tracking-widest text-brand-cream/40 mb-2">
                       Featured In This Category
                     </p>
                     <div className="flex flex-wrap gap-2 max-w-md">
                       {activeCategory.sampleItemNames.map((itemName) => (
                         <span
                           key={itemName}
-                          className="font-mono text-xs px-2.5 py-1 bg-brand-cream/5 border border-brand-cream/10 rounded-sm text-brand-cream/70"
+                          className="font-sans text-xs px-2.5 py-1 bg-brand-cream/5 border border-brand-cream/10 rounded-sm text-brand-cream/70"
                         >
                           {itemName}
                         </span>
@@ -216,7 +216,7 @@ const FoodDiscoverySection = () => {
                   <div className="pt-6">
                     <button
                       onClick={() => scrollToMenuCategory(activeCategory.id)}
-                      className="group inline-flex items-center gap-3 text-base font-bold font-mono tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
+                      className="group inline-flex items-center gap-3 text-base font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
                     >
                       <span>{activeCategory.cta}</span>
                       <ArrowRight className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 text-brand-wood" />
@@ -272,7 +272,7 @@ const FoodDiscoverySection = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-black/20 pointer-events-none" />
 
                     {/* Minimal photo tag */}
-                    <div className="absolute bottom-6 right-6 font-mono text-xs uppercase tracking-widest text-brand-cream/60 px-3 py-1 bg-brand-dark/60 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
+                    <div className="absolute bottom-6 right-6 font-sans text-xs uppercase tracking-widest text-brand-cream/60 px-3 py-1 bg-brand-dark/60 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
                       MR. SALAD · {cat.number}
                     </div>
                   </motion.div>
@@ -294,11 +294,11 @@ const FoodDiscoverySection = () => {
           >
             {/* Header: Number & Tagline */}
             <div className="flex items-center gap-3">
-              <span className="font-mono text-lg text-brand-wood font-bold">
+              <span className="font-sans text-lg text-brand-wood font-bold">
                 {cat.number}
               </span>
               <span className="h-[1px] w-6 bg-brand-wood/40" />
-              <span className="font-mono text-xs uppercase tracking-wider text-brand-cream/50">
+              <span className="font-sans text-xs uppercase tracking-wider text-brand-cream/50">
                 {cat.tagline}
               </span>
             </div>
@@ -317,7 +317,7 @@ const FoodDiscoverySection = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/50 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-brand-cream/70 px-2.5 py-1 bg-brand-dark/70 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
+              <div className="absolute bottom-4 right-4 font-sans text-[10px] uppercase tracking-widest text-brand-cream/70 px-2.5 py-1 bg-brand-dark/70 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
                 MR. SALAD
               </div>
             </div>
@@ -329,14 +329,14 @@ const FoodDiscoverySection = () => {
 
             {/* Sample Items */}
             <div className="space-y-2">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-brand-cream/40">
+              <p className="font-sans text-[11px] uppercase tracking-widest text-brand-cream/40">
                 Popular Choices
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {cat.sampleItemNames.map((name) => (
                   <span
                     key={name}
-                    className="font-mono text-xs px-2 py-0.5 bg-brand-cream/5 border border-brand-cream/10 rounded-sm text-brand-cream/70"
+                    className="font-sans text-xs px-2 py-0.5 bg-brand-cream/5 border border-brand-cream/10 rounded-sm text-brand-cream/70"
                   >
                     {name}
                   </span>
@@ -348,7 +348,7 @@ const FoodDiscoverySection = () => {
             <div className="pt-2">
               <button
                 onClick={() => scrollToMenuCategory(cat.id)}
-                className="group inline-flex items-center gap-2.5 text-sm font-bold font-mono tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
+                className="group inline-flex items-center gap-2.5 text-sm font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
               >
                 <span>{cat.cta}</span>
                 <ArrowRight className="w-4 h-4 text-brand-wood transition-transform group-hover:translate-x-1.5" />
@@ -365,13 +365,13 @@ const FoodDiscoverySection = () => {
         
         {/* Subtle background ambient graphic */}
         <div className="absolute inset-0 pointer-events-none opacity-5 flex items-center justify-center select-none">
-          <span className="font-mono text-[18vw] font-black text-brand-cream leading-none">
+          <span className="font-sans text-[18vw] font-black text-brand-cream leading-none">
             MENU
           </span>
         </div>
 
         <div className="relative z-10 max-w-4xl flex flex-col items-center">
-          <p className="font-mono text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium mb-6">
+          <p className="font-sans text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium mb-6">
             The Complete Selection
           </p>
 
@@ -382,7 +382,7 @@ const FoodDiscoverySection = () => {
 
           <button
             onClick={scrollToFullMenu}
-            className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 bg-brand-cream text-brand-green font-mono font-bold text-sm md:text-base tracking-[0.15em] uppercase rounded-full hover:bg-brand-wood hover:text-brand-white transition-all duration-300 shadow-xl"
+            className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 bg-brand-cream text-brand-green font-sans font-bold text-sm md:text-base tracking-[0.15em] uppercase rounded-full hover:bg-brand-wood hover:text-brand-white transition-all duration-300 shadow-xl"
           >
             <span>VIEW FULL MENU</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />

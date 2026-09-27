@@ -2,7 +2,7 @@ import React from 'react';
 
 const MenuHeader = () => (
   <div className="text-center py-10 md:py-16">
-    <p className="font-mono text-xs tracking-[0.25em] uppercase text-brand-green mb-3">
+    <p className="font-sans text-xs tracking-[0.25em] font-semibold uppercase text-brand-green mb-3">
       The Diet Studio
     </p>
     <h1
