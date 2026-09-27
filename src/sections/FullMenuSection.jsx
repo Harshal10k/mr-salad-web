@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import categories, { CREATE_YOUR_SALAD_DATA } from '../data/categories';
 import MenuCard from '../components/MenuCard';
 import ItemDetailModal from '../components/ItemDetailModal';
+import VegBadge from '../components/VegBadge';
 import { ZOMATO_URL, SWIGGY_URL, getWhatsAppEnquiryUrl } from '../config/brand';
 import menuData from '../data/menu.json';
 
@@ -64,7 +65,7 @@ export default function FullMenuSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-8 md:mb-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-brand-black/10">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-semibold">
+            <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-semibold">
               The Diet Studio
             </span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.95] text-brand-black mt-2 uppercase">
@@ -175,7 +176,7 @@ export default function FullMenuSection() {
               {/* Category Header */}
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-4 mb-8 border-b border-brand-black/10">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-mono text-xs font-bold text-brand-green tracking-wider">
+                  <span className="font-sans text-xs font-bold text-brand-green tracking-wider">
                     {category.number}
                   </span>
                   <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-brand-black uppercase">
@@ -183,7 +184,7 @@ export default function FullMenuSection() {
                   </h3>
                 </div>
                 <div className="text-xs text-brand-black/50 font-medium">
-                  {category.tagline} · {category.items.length} {category.items.length === 1 ? 'item' : 'items'}
+                  {category.tagline}
                 </div>
               </div>
 
@@ -219,7 +220,7 @@ export default function FullMenuSection() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-brand-black/10">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="font-mono text-xs font-bold text-brand-green tracking-wider">
+                  <span className="font-sans text-xs font-bold text-brand-green tracking-wider">
                     {CREATE_YOUR_SALAD_DATA.number}
                   </span>
                   <span className="px-2.5 py-0.5 rounded-full bg-brand-green/10 text-brand-green text-[10px] font-bold uppercase tracking-wider">
@@ -235,13 +236,13 @@ export default function FullMenuSection() {
               </div>
 
               <div className="flex flex-col items-start md:items-end">
-                <span className="text-[11px] font-mono text-brand-black/40 uppercase">
+                <span className="text-[11px] font-sans text-brand-black/40 uppercase">
                   Studio Reference Price
                 </span>
                 <span className="font-display text-2xl sm:text-3xl font-black text-brand-black">
                   Starting @ ₹{CREATE_YOUR_SALAD_DATA.base.price}
                 </span>
-                <span className="text-[10px] text-brand-black/40 italic mt-0.5">
+                <span className="text-[10px] text-brand-black/40 font-medium mt-0.5">
                   Confirm current rates upon enquiry
                 </span>
               </div>
@@ -253,7 +254,7 @@ export default function FullMenuSection() {
               <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono font-bold tracking-wider text-brand-green uppercase">
+                    <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
                       STEP 01
                     </span>
                     <span className="text-xs font-bold text-brand-black">
@@ -276,7 +277,7 @@ export default function FullMenuSection() {
               <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono font-bold tracking-wider text-brand-green uppercase">
+                    <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
                       STEP 02: PROTEIN
                     </span>
                     <span className="text-xs font-bold text-brand-black">
@@ -289,13 +290,14 @@ export default function FullMenuSection() {
                   <p className="text-xs text-brand-black/60 leading-relaxed mb-3">
                     Select your clean protein booster:
                   </p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-2">
                     {CREATE_YOUR_SALAD_DATA.proteins.items.map((p) => (
                       <span
                         key={p.name}
-                        className="px-2 py-1 rounded-md bg-brand-white border border-brand-black/8 text-[11px] font-semibold text-brand-black/80"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-brand-white border border-brand-black/8 text-[11px] font-semibold text-brand-black/80"
                       >
-                        {p.name} {p.nonVeg && <span className="text-red-500 font-bold">•</span>}
+                        <span>{p.name}</span>
+                        <VegBadge isVeg={!p.nonVeg} className="text-[9px] px-1.5 py-0" />
                       </span>
                     ))}
                   </div>
@@ -309,7 +311,7 @@ export default function FullMenuSection() {
               <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono font-bold tracking-wider text-brand-green uppercase">
+                    <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
                       STEP 03: VEGGIES
                     </span>
                     <span className="text-xs font-bold text-brand-black">

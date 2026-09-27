@@ -1,14 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const VegDot = ({ isVeg }) => (
-  <span className="inline-flex items-center gap-1 text-[10px] tracking-wider uppercase font-semibold text-brand-black/50">
-    <span
-      className={`w-2 h-2 rounded-full ${isVeg ? 'bg-green-600' : 'bg-red-600'}`}
-    />
-    {isVeg ? 'Veg' : 'Non-Veg'}
-  </span>
-);
+import VegBadge from './VegBadge';
 
 const MenuCard = ({ item, onOpen }) => {
   const hasNutrition = item.cal != null || item.protein != null || item.fat != null || item.carb != null;
@@ -19,11 +11,11 @@ const MenuCard = ({ item, onOpen }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.3 }}
-      onClick={() => onOpen(item)}
+      onClick={() => onOpen?.(item)}
       className="group flex flex-col justify-between h-full bg-brand-white rounded-2xl border border-brand-black/8 hover:border-brand-black/20 p-4 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onOpen(item)}
+      onKeyDown={(e) => e.key === 'Enter' && onOpen?.(item)}
       aria-label={`View details for ${item.name}`}
     >
       <div>
@@ -40,9 +32,7 @@ const MenuCard = ({ item, onOpen }) => {
             }}
           />
           <div className="absolute top-2.5 left-2.5">
-            <span className="px-2 py-1 rounded-md bg-white/90 backdrop-blur-xs shadow-xs text-[10px] font-bold">
-              <VegDot isVeg={item.veg} />
-            </span>
+            <VegBadge isVeg={item.veg} />
           </div>
         </div>
 
@@ -51,7 +41,7 @@ const MenuCard = ({ item, onOpen }) => {
           <h3 className="font-display text-base md:text-lg font-bold text-brand-black tracking-tight leading-snug group-hover:text-brand-green transition-colors">
             {item.name}
           </h3>
-          <span className="font-display text-base md:text-lg font-black text-brand-black shrink-0">
+          <span className="font-display text-base md:text-lg font-semibold text-brand-green shrink-0">
             ₹{item.price}
           </span>
         </div>

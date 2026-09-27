@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { UtensilsCrossed, Phone, ChefHat, Sparkles } from 'lucide-react';
 
 const STEPS = [
   {
     number: '01',
     title: 'CHOOSE',
     detail: 'Choose a meal or wellness plan from our menu.',
+    Icon: UtensilsCrossed,
   },
   {
     number: '02',
@@ -17,16 +19,19 @@ const STEPS = [
         <span className="mt-1 block"><strong>Subscriptions:</strong> Contact us through WhatsApp / phone.</span>
       </>
     ),
+    Icon: Phone,
   },
   {
     number: '03',
     title: 'WE PREPARE',
     detail: 'Your meal is prepared fresh in Bajaj Nagar. Air-fried / prepared without deep frying.',
+    Icon: ChefHat,
   },
   {
     number: '04',
     title: 'ENJOY',
     detail: 'Get your meal delivered fresh and enjoy clean nutrition.',
+    Icon: Sparkles,
   },
 ];
 
@@ -69,6 +74,8 @@ const StepCard = ({ step, index, containerProgress }) => {
     ['rgba(26, 26, 26, 0.06)', 'rgba(30, 58, 47, 0.25)']
   );
 
+  const { Icon } = step;
+
   return (
     <motion.div
       style={{
@@ -81,9 +88,15 @@ const StepCard = ({ step, index, containerProgress }) => {
       className="bg-brand-white rounded-3xl p-6 sm:p-8 border flex flex-col justify-between transition-colors duration-200"
     >
       <div>
-        <span className="font-mono text-4xl sm:text-5xl font-black text-brand-green/25 block mb-6">
-          {step.number}
-        </span>
+        {/* Numeral + icon row */}
+        <div className="flex items-center gap-3 mb-6">
+          <span className="font-display text-4xl sm:text-5xl font-black text-brand-green leading-none">
+            {step.number}
+          </span>
+          <span className="w-9 h-9 rounded-xl bg-brand-green/10 flex items-center justify-center shrink-0">
+            <Icon size={18} className="text-brand-green" strokeWidth={2} />
+          </span>
+        </div>
         <h3 className="font-display text-xl font-black tracking-tight text-brand-black uppercase mb-3">
           {step.title}
         </h3>
@@ -113,8 +126,8 @@ export default function HowItWorksSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="mb-14 md:mb-20">
-          <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
-            Simple & Transparent
+          <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
+            Simple &amp; Transparent
           </span>
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.93] text-brand-black uppercase mt-2">
             HOW IT WORKS

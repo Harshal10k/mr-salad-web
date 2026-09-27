@@ -1,14 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BRAND } from '../config/brand';
 
 export default function TestimonialsSection() {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchReviews() {
+      try {
+        const res = await fetch('/api/reviews');
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        if (isMounted) {
+          if (Array.isArray(data) && data.length > 0) {
+            setReviews(data);
+          } else {
+            setFetchError(true);
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          setFetchError(true);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchReviews();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const renderStars = (rating) => {
+    const total = Math.max(1, Math.min(5, Math.round(Number(rating) || 5)));
+    return (
+      <div className="flex items-center gap-1 text-amber-500 text-sm">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={i < total ? 'text-amber-500' : 'text-brand-black/20'}>
+            ★
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  // Format relative time if ISO string or pass through
+  const formatTime = (timeStr) => {
+    if (!timeStr) return '';
+    try {
+      const date = new Date(timeStr);
+      if (!isNaN(date.getTime())) {
+        return date.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+      }
+    } catch {
+      // fallback
+    }
+    return timeStr;
+  };
+
   return (
-    <section id="testimonials" className="relative bg-brand-white text-brand-black py-20 md:py-28 border-t border-brand-black/10">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+    <section id="testimonials" className="relative bg-brand-white text-brand-black py-20 md:py-28 border-t border-brand-black/10 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-12 md:mb-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-brand-green font-bold">
+            <span className="font-sans text-xs uppercase tracking-widest text-brand-green font-bold">
               Community & Feedback
             </span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.93] text-brand-black uppercase mt-2">
@@ -19,77 +83,79 @@ export default function TestimonialsSection() {
             We prioritize transparent food and authentic experiences in Nagpur.
           </p>
         </div>
+      </div>
 
-        {/* Testimonials Placeholders Container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Review placeholder */}
-          <div className="bg-brand-cream/50 border border-dashed border-brand-black/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-1.5 mb-4 text-brand-black/40 text-xs font-mono">
-                <span>Google & Zomato Reviews</span>
-              </div>
-              <p className="text-sm sm:text-base text-brand-black/60 font-medium italic leading-relaxed">
-                &ldquo;Real customer reviews will appear here.&rdquo;
-              </p>
-            </div>
-            <div className="mt-8 pt-4 border-t border-brand-black/10 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-brand-black/5 flex items-center justify-center font-mono text-xs text-brand-black/40">
-                ★
-              </div>
-              <div>
-                <div className="text-xs font-bold text-brand-black/70">Verified Customer</div>
-                <div className="text-[10px] text-brand-black/40">Bajaj Nagar, Nagpur</div>
-              </div>
-            </div>
-          </div>
+      {/* Reviews Marquee Area (Hidden gracefully if fetch fails or no reviews) */}
+      {!loading && !fetchError && reviews.length > 0 && (
+        <div className="relative w-full mb-14 overflow-hidden">
+          {/* Gradient fade edges for smooth loop aesthetics */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-brand-white to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-brand-white to-transparent z-10" />
 
-          {/* Card 2: Review placeholder */}
-          <div className="bg-brand-cream/50 border border-dashed border-brand-black/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-1.5 mb-4 text-brand-black/40 text-xs font-mono">
-                <span>Diet Studio Experience</span>
-              </div>
-              <p className="text-sm sm:text-base text-brand-black/60 font-medium italic leading-relaxed">
-                &ldquo;Real customer reviews will appear here.&rdquo;
-              </p>
-            </div>
-            <div className="mt-8 pt-4 border-t border-brand-black/10 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-brand-black/5 flex items-center justify-center font-mono text-xs text-brand-black/40">
-                ★
-              </div>
-              <div>
-                <div className="text-xs font-bold text-brand-black/70">Subscription Member</div>
-                <div className="text-[10px] text-brand-black/40">26-Day Wellness Plan</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Social proof & community invite */}
-          <div className="bg-brand-cream rounded-3xl p-6 sm:p-8 border border-brand-black/10 flex flex-col justify-between">
-            <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-brand-green/10 text-brand-green text-[10px] font-bold uppercase tracking-wider mb-4">
-                Share Your Meal
-              </div>
-              <h3 className="font-display text-xl font-bold text-brand-black mb-2">
-                Tag Us On Instagram
-              </h3>
-              <p className="text-xs sm:text-sm text-brand-black/65 leading-relaxed">
-                Enjoyed your bowl or salad? Share a photo and tag <strong>@{BRAND.instagramHandle}</strong> to get featured on our brand feed.
-              </p>
-            </div>
-            <div className="mt-8 pt-4 border-t border-brand-black/10">
-              <a
-                href={BRAND.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-green hover:text-brand-dark transition-colors"
+          {/* Marquee Track: duplicated set for continuous seamless loop */}
+          <div className="animate-marquee pause-hover flex gap-6 px-4">
+            {[...reviews, ...reviews].map((rev, index) => (
+              <div
+                key={`${rev.id || index}-${index}`}
+                className="w-[300px] sm:w-[350px] shrink-0 bg-brand-cream/80 border border-brand-black/10 rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:border-brand-green/30 hover:bg-brand-cream transition-all shadow-sm"
               >
-                Follow @{BRAND.instagramHandle} ↗
-              </a>
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    {renderStars(rev.starRating)}
+                    <span className="text-[11px] font-sans text-brand-black/40">
+                      {formatTime(rev.relativeTime)}
+                    </span>
+                  </div>
+                  <p className="text-sm text-brand-black/80 font-medium leading-relaxed line-clamp-4">
+                    &ldquo;{rev.comment || 'Amazing fresh food and refreshing bowls! Highly recommended.'}&rdquo;
+                  </p>
+                </div>
+                <div className="mt-6 pt-4 border-t border-brand-black/10 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center font-bold text-xs uppercase">
+                    {rev.name ? rev.name.charAt(0) : 'G'}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-brand-black/90">
+                      {rev.name || 'Google Reviewer'}
+                    </div>
+                    <div className="text-[10px] text-brand-black/45 flex items-center gap-1 font-sans">
+                      <span>Verified Google Review</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Final Static Container: Tag Us On Instagram */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="bg-brand-cream rounded-3xl p-6 sm:p-8 border border-brand-black/10 flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-4xl mx-auto shadow-sm">
+          <div>
+            <div className="inline-block px-3 py-1 rounded-full bg-brand-green/10 text-brand-green text-[10px] font-bold uppercase tracking-wider mb-3">
+              Share Your Meal
             </div>
+            <h3 className="font-display text-2xl font-bold text-brand-black mb-2">
+              Tag Us On Instagram
+            </h3>
+            <p className="text-xs sm:text-sm text-brand-black/65 leading-relaxed max-w-xl">
+              Enjoyed your bowl or salad? Share a photo and tag <strong>@{BRAND.instagramHandle}</strong> to get featured on our brand feed.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <a
+              href={BRAND.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-green text-brand-cream hover:bg-brand-dark text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+            >
+              Follow @{BRAND.instagramHandle} ↗
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

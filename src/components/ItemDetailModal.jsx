@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZOMATO_URL, SWIGGY_URL } from '../config/brand';
-
-const VegDot = ({ isVeg }) => (
-  <span className="flex items-center gap-2 text-xs tracking-widest uppercase font-semibold text-brand-black/60">
-    <span className={`w-2.5 h-2.5 rounded-full ${isVeg ? 'bg-green-600' : 'bg-red-600'}`} />
-    {isVeg ? 'Vegetarian' : 'Non-Vegetarian'}
-  </span>
-);
+import VegBadge from './VegBadge';
 
 const NutritionStat = ({ value, unit, label }) => {
   if (value == null) return null;
@@ -92,7 +86,7 @@ const ItemDetailModal = ({ item, addOns = [], onClose }) => {
               <h2 className="font-display text-2xl md:text-3xl font-black text-brand-black tracking-tight leading-tight">
                 {item.name}
               </h2>
-              <span className="font-display text-2xl md:text-3xl font-black text-brand-black shrink-0">
+              <span className="font-display text-2xl md:text-3xl font-semibold text-brand-green shrink-0">
                 ₹{item.price}
               </span>
             </div>
@@ -105,7 +99,7 @@ const ItemDetailModal = ({ item, addOns = [], onClose }) => {
             )}
 
             <div className="mb-4">
-              <VegDot isVeg={item.veg} />
+              <VegBadge isVeg={item.veg} />
             </div>
 
             {/* Nutrition Breakdown (only non-nulls) */}
