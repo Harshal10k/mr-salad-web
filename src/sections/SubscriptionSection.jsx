@@ -22,7 +22,7 @@ export default function SubscriptionSection() {
   };
 
   return (
-    <section id="subscription" className="relative bg-brand-white text-brand-black py-20 md:py-28 border-t border-brand-black/10">
+    <section id="subscription" className="relative bg-brand-cream text-brand-black py-20 md:py-28 border-t border-brand-black/10">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* ── 2-COLUMN HEADER: TEXT ON LEFT, 26-DAY PLAN CARD ON RIGHT ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-16 md:mb-20">
@@ -45,13 +45,13 @@ export default function SubscriptionSection() {
 
             {/* Quick value badges */}
             <div className="mt-8 flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-cream border border-brand-black/10 text-xs font-semibold text-brand-black/80">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-white border border-brand-black/10 text-xs font-semibold text-brand-black/80">
                 <span className="text-brand-green font-bold">✓</span> 26 Days Rotating Menu
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-cream border border-brand-black/10 text-xs font-semibold text-brand-black/80">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-white border border-brand-black/10 text-xs font-semibold text-brand-black/80">
                 <span className="text-brand-green font-bold">✓</span> High Protein
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-cream border border-brand-black/10 text-xs font-semibold text-brand-black/80">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-white border border-brand-black/10 text-xs font-semibold text-brand-black/80">
                 <span className="text-brand-green font-bold">✓</span> Nagpur Local Prep
               </span>
             </div>
@@ -137,14 +137,14 @@ export default function SubscriptionSection() {
             {[SUBSCRIPTION_SCHEDULE.slice(0, 13), SUBSCRIPTION_SCHEDULE.slice(13)].map((columnMeals, colIdx) => (
               <ul
                 key={colIdx}
-                className="bg-brand-cream/35 border border-brand-black/10 rounded-2xl divide-y divide-brand-black/8 overflow-hidden shadow-xs"
+                className="bg-brand-white border border-brand-black/10 rounded-2xl divide-y divide-brand-black/8 overflow-hidden shadow-xs"
               >
                 {columnMeals.map((item) => {
                   const dayStr = item.day < 10 ? `0${item.day}` : item.day;
                   return (
                     <li
                       key={item.day}
-                      className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 sm:py-3 hover:bg-brand-white/80 transition-colors group"
+                      className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 sm:py-3 hover:bg-brand-cream/60 transition-colors group"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         {/* Visually distinct dark-green semibold pill */}

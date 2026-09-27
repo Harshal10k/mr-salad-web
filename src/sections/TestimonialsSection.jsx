@@ -67,7 +67,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section id="testimonials" className="relative bg-brand-white text-brand-black py-20 md:py-28 border-t border-brand-black/10 overflow-hidden">
+    <section id="testimonials" className="relative bg-brand-cream text-brand-black py-20 md:py-28 border-t border-brand-black/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-12 md:mb-16">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -89,15 +89,15 @@ export default function TestimonialsSection() {
       {!loading && !fetchError && reviews.length > 0 && (
         <div className="relative w-full mb-14 overflow-hidden">
           {/* Gradient fade edges for smooth loop aesthetics */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-brand-white to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-brand-white to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-brand-cream to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-brand-cream to-transparent z-10" />
 
           {/* Marquee Track: duplicated set for continuous seamless loop */}
           <div className="animate-marquee pause-hover flex gap-6 px-4">
             {[...reviews, ...reviews].map((rev, index) => (
               <div
                 key={`${rev.id || index}-${index}`}
-                className="w-[300px] sm:w-[350px] shrink-0 bg-brand-cream/80 border border-brand-black/10 rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:border-brand-green/30 hover:bg-brand-cream transition-all shadow-sm"
+                className="w-[300px] sm:w-[350px] shrink-0 bg-brand-white border border-brand-black/10 rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:border-brand-green/30 transition-all shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -131,7 +131,7 @@ export default function TestimonialsSection() {
 
       {/* Final Static Container: Tag Us On Instagram */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="bg-brand-cream rounded-3xl p-6 sm:p-8 border border-brand-black/10 flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-4xl mx-auto shadow-sm">
+        <div className="bg-brand-white rounded-3xl p-6 sm:p-8 border border-brand-black/10 flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-4xl mx-auto shadow-sm">
           <div>
             <div className="inline-block px-3 py-1 rounded-full bg-brand-green/10 text-brand-green text-[10px] font-bold uppercase tracking-wider mb-3">
               Share Your Meal

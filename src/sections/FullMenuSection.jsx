@@ -60,7 +60,8 @@ export default function FullMenuSection() {
   };
 
   return (
-    <section id="menu" className="relative bg-brand-cream text-brand-black pt-16 md:pt-24 pb-20">
+    <>
+      <section id="menu" className="relative bg-brand-cream text-brand-black pt-16 md:pt-24 pb-20">
       {/* ── SECTION HEADER ── */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-8 md:mb-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-brand-black/10">
@@ -209,13 +210,16 @@ export default function FullMenuSection() {
             </div>
           );
         })}
+      </div>
+    </section>
 
-        {/* ── CREATE YOUR SALAD SUBSECTION ── */}
-        <div
-          id={`menu-cat-${CREATE_YOUR_SALAD_DATA.id}`}
-          className="scroll-mt-24 pt-4"
-        >
-          <div className="bg-brand-white rounded-3xl border border-brand-black/12 p-6 sm:p-8 lg:p-12 shadow-sm">
+    {/* ── CREATE YOUR SALAD SECTION ── */}
+    <section
+      id={`menu-cat-${CREATE_YOUR_SALAD_DATA.id}`}
+      className="relative bg-brand-white text-brand-black py-16 md:py-24 border-t border-brand-black/10 scroll-mt-24"
+    >
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="bg-brand-cream rounded-3xl border border-brand-black/12 p-6 sm:p-8 lg:p-12 shadow-sm">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-brand-black/10">
               <div>
@@ -251,7 +255,7 @@ export default function FullMenuSection() {
             {/* 3 Step Visual Experience */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* STEP 1: BASE */}
-              <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
+              <div className="bg-brand-white rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
@@ -274,7 +278,7 @@ export default function FullMenuSection() {
               </div>
 
               {/* STEP 2: PROTEINS */}
-              <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
+              <div className="bg-brand-white rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
@@ -308,7 +312,7 @@ export default function FullMenuSection() {
               </div>
 
               {/* STEP 3: VEGGIES */}
-              <div className="bg-brand-cream/60 rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
+              <div className="bg-brand-white rounded-2xl p-5 border border-brand-black/5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-sans font-bold tracking-wider text-brand-green uppercase">
@@ -357,7 +361,7 @@ export default function FullMenuSection() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── DETAIL MODAL ── */}
       {selectedItem && (
@@ -367,6 +371,6 @@ export default function FullMenuSection() {
           onClose={() => setSelectedItem(null)}
         />
       )}
-    </section>
+    </>
   );
 }

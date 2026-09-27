@@ -24,7 +24,7 @@ export default function Footer() {
     >
 
       {/* ── NEWSLETTER STRIP ──────────────────────────────── */}
-      <div className="border-b border-brand-black/8 py-4 px-5 sm:px-8 lg:px-12">
+      <div className="bg-brand-cream border-b border-brand-black/8 py-4 px-5 sm:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           <p className="text-sm text-brand-black font-medium tracking-tight">
             Get the latest in your inbox
@@ -44,7 +44,7 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="text-sm px-4 py-1.5 rounded-full border border-brand-black/15 bg-transparent text-brand-black placeholder:text-brand-black/30 focus:outline-none focus:border-brand-green/50 w-44 sm:w-52 transition-colors"
+                className="text-sm px-4 py-1.5 rounded-full border border-brand-black/15 bg-brand-white text-brand-black placeholder:text-brand-black/30 focus:outline-none focus:border-brand-green/50 w-44 sm:w-52 transition-colors"
               />
               <button
                 type="submit"
