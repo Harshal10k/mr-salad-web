@@ -10,42 +10,27 @@ import TestimonialsSection from './sections/TestimonialsSection';
 import FaqSection from './sections/FaqSection';
 import Footer from './components/Footer';
 
-function App() {
+function HomePage() {
   return (
-    <div className="font-sans min-h-screen bg-brand-cream text-brand-black selection:bg-brand-green selection:text-brand-white">
+    <>
+      <HeroSection />
+      <UspStripSection />
+      <FullMenuSection />
+      <SubscriptionSection />
+      <HowItWorksSection />
+      <TestimonialsSection />
+      <FaqSection />
+      <Footer />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-brand-white font-sans text-brand-black selection:bg-brand-green selection:text-brand-white">
       <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <main>
-              {/* 1. HERO */}
-              <HeroSection />
-
-              {/* 2. USP STRIP */}
-              <UspStripSection />
-
-              {/* 3. MENU (Salads, Bowls, Smoothie Bowls, Between Bread, Snacks, Juices, Create Your Salad) */}
-              <FullMenuSection />
-
-              {/* 4. 26-DAY WELLNESS SUBSCRIPTION */}
-              <SubscriptionSection />
-
-              {/* 5. HOW IT WORKS */}
-              <HowItWorksSection />
-
-              {/* 6. TESTIMONIALS / SOCIAL PROOF */}
-              <TestimonialsSection />
-
-              {/* 7. FAQ */}
-              <FaqSection />
-
-              {/* 8. FOOTER / CONTACT */}
-              <Footer />
-            </main>
-          }
-        />
-        {/* Redirect any /menu link back to home with smooth anchor */}
+        <Route path="/" element={<HomePage />} />
         <Route path="/menu" element={<RedirectToMenu />} />
       </Routes>
     </div>
@@ -53,10 +38,6 @@ function App() {
 }
 
 function RedirectToMenu() {
-  React.useEffect(() => {
-    window.location.replace('/#menu');
-  }, []);
+  React.useEffect(() => { window.location.replace('/#menu'); }, []);
   return null;
 }
-
-export default App;

@@ -65,7 +65,7 @@ const ItemDetailModal = ({ item, addOns = [], onClose }) => {
           {/* Image */}
           <div className="relative w-full aspect-[4/3] bg-brand-cream overflow-hidden rounded-t-3xl">
             <img
-              src={`/images/${item.image}`}
+              src={item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : ''}
               alt={item.name}
               className="w-full h-full object-cover"
               onError={(e) => {

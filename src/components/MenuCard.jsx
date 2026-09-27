@@ -30,7 +30,7 @@ const MenuCard = ({ item, onOpen }) => {
         {/* Food Image */}
         <div className="relative overflow-hidden rounded-xl bg-brand-cream aspect-[4/3] mb-3.5">
           <img
-            src={`/images/${item.image}`}
+            src={item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : ''}
             alt={item.name}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
