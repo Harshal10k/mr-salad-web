@@ -99,7 +99,7 @@ export const categories = CATEGORY_CONFIG.map((cat) => {
     .filter(cat.filter)
     .map((item) => ({
       ...item,
-      description: getItemDescription(item),
+      description: item.description || getItemDescription(item),
     }));
 
   return {

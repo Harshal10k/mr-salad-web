@@ -23,13 +23,20 @@ const HeroSection = () => {
   }, [isMobile]);
 
   // Overall scroll tracking across the hero section
-  const { scrollYProgress } = useScroll({
+  const { scrollY, scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
+  // Buttons fade out completely by 200px of window scroll
+  const buttonOpacity = useTransform(scrollY, [0, 200], [1, 0]);
+  const buttonPointerEvents = useTransform(scrollY, (y) => (y >= 200 ? 'none' : 'auto'));
+
+  // 'Good Food. Good Energy.' fades away smoothly by 800px scroll
+  const headlineOpacity = useTransform(scrollY, [500, 800], [1, 0]);
+
   // Initial video card offset from screen top (starts below the text + space)
-  const initialOffset = isMobile ? 320 : 380;
+  const initialOffset = isMobile ? 380 : 450;
 
   // Video card rises up to cover the full viewport
   const videoTop = useTransform(scrollYProgress, [0, 0.28], [initialOffset, 0]);
@@ -62,27 +69,30 @@ const HeroSection = () => {
       <div className="sticky top-0 h-screen w-full bg-brand-cream overflow-hidden">
 
         {/* ── LAYER 1: BLACK TEXT & BUTTONS (STATIONARY ON CREAM BACKGROUND) ── */}
-        <motion.div
-          style={{ opacity: textOpacity }}
-          className="absolute top-0 inset-x-0 z-0 flex flex-col items-center text-center pt-8 sm:pt-12 md:pt-14 pb-8 px-4"
+        <div
+          className="absolute top-0 inset-x-0 z-0 flex flex-col items-center text-center pt-24 sm:pt-28 md:pt-32 pb-8 px-4"
         >
-          {/* Eyebrow / Subtitle */}
-          <div className="flex flex-col items-center mb-3 sm:mb-4 pointer-events-none">
-            <p className="max-w-xl px-6 text-center font-mono text-xs leading-[1.2] md:text-sm text-brand-black/75 font-medium uppercase tracking-widest">
-              The Diet Studio
-            </p>
-            <p className="max-w-xl px-6 text-center font-mono text-[10px] md:text-xs text-brand-black/45 mt-0.5 tracking-wider font-semibold">
-              MR. SALAD
-            </p>
-          </div>
+          {/* Eyebrow & Headline (Fades away by 800px scroll) */}
+          <motion.div style={{ opacity: headlineOpacity }} className="flex flex-col items-center pointer-events-none">
+            <div className="flex flex-col items-center mb-3 sm:mb-4">
+              <p className="max-w-xl px-6 text-center font-mono text-xs leading-[1.2] md:text-sm text-brand-black/75 font-medium uppercase tracking-widest">
+                The Diet Studio
+              </p>
+              <p className="max-w-xl px-6 text-center font-mono text-[10px] md:text-xs text-brand-black/45 mt-0.5 tracking-wider font-semibold">
+                MR. SALAD
+              </p>
+            </div>
 
-          {/* Headline */}
-          <h1 className="max-w-[22ch] px-4 text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.96] text-brand-black pointer-events-none">
-            GOOD FOOD.<br /> GOOD ENERGY.
-          </h1>
+            <h1 className="max-w-[22ch] px-4 text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.96] text-brand-black">
+              GOOD FOOD.<br /> GOOD ENERGY.
+            </h1>
+          </motion.div>
 
-          {/* Dual CTAs (Clickable) */}
-          <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 pointer-events-auto">
+          {/* Dual CTAs (Fade away by 200px scroll) */}
+          <motion.div
+            style={{ opacity: buttonOpacity, pointerEvents: buttonPointerEvents }}
+            className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+          >
             <button
               onClick={() => scrollTo('menu')}
               className="px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wider uppercase bg-brand-green text-white hover:bg-brand-dark transition-all duration-200 shadow-md hover:scale-105 active:scale-95"
@@ -95,11 +105,11 @@ const HeroSection = () => {
             >
               Explore 26-Day Plan →
             </button>
-          </div>
+          </motion.div>
 
           {/* Space after buttons before video starts */}
-          <div className="h-10 sm:h-14 md:h-16" />
-        </motion.div>
+          <div className="h-16 sm:h-20 md:h-24" />
+        </div>
 
         {/* ── LAYER 2: VIDEO CARD (SCROLLS UP OVER LAYER 1 WITH OVERFLOW HIDDEN) ── */}
         <motion.div
@@ -136,27 +146,30 @@ const HeroSection = () => {
           <motion.div
             style={{
               y: innerTextY,
-              opacity: textOpacity,
             }}
-            className="absolute top-0 inset-x-0 z-10 flex flex-col items-center text-center pt-8 sm:pt-12 md:pt-14 pb-8 px-4"
+            className="absolute top-0 inset-x-0 z-10 flex flex-col items-center text-center pt-24 sm:pt-28 md:pt-32 pb-8 px-4"
           >
-            {/* Eyebrow / Subtitle */}
-            <div className="flex flex-col items-center mb-3 sm:mb-4 pointer-events-none">
-              <p className="max-w-xl px-6 text-center font-mono text-xs leading-[1.2] md:text-sm text-white/90 font-medium uppercase tracking-widest">
-                The Diet Studio
-              </p>
-              <p className="max-w-xl px-6 text-center font-mono text-[10px] md:text-xs text-white/60 mt-0.5 tracking-wider font-semibold">
-                MR. SALAD
-              </p>
-            </div>
+            {/* Eyebrow & Headline (Fades away by 800px scroll) */}
+            <motion.div style={{ opacity: headlineOpacity }} className="flex flex-col items-center pointer-events-none">
+              <div className="flex flex-col items-center mb-3 sm:mb-4">
+                <p className="max-w-xl px-6 text-center font-mono text-xs leading-[1.2] md:text-sm text-white/90 font-medium uppercase tracking-widest">
+                  The Diet Studio
+                </p>
+                <p className="max-w-xl px-6 text-center font-mono text-[10px] md:text-xs text-white/60 mt-0.5 tracking-wider font-semibold">
+                  MR. SALAD
+                </p>
+              </div>
 
-            {/* Headline */}
-            <h1 className="max-w-[22ch] px-4 text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.96] text-white drop-shadow-md pointer-events-none">
-              GOOD FOOD.<br /> GOOD ENERGY.
-            </h1>
+              <h1 className="max-w-[22ch] px-4 text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.96] text-white drop-shadow-md">
+                GOOD FOOD.<br /> GOOD ENERGY.
+              </h1>
+            </motion.div>
 
-            {/* Dual CTAs (Clickable inside video overlay) */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 pointer-events-auto">
+            {/* Dual CTAs (Fade away by 200px scroll) */}
+            <motion.div
+              style={{ opacity: buttonOpacity, pointerEvents: buttonPointerEvents }}
+              className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+            >
               <button
                 onClick={() => scrollTo('menu')}
                 className="px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wider uppercase bg-white text-brand-black hover:bg-brand-cream transition-all duration-200 shadow-lg hover:scale-105 active:scale-95"
@@ -169,7 +182,7 @@ const HeroSection = () => {
               >
                 Explore 26-Day Plan →
               </button>
-            </div>
+            </motion.div>
 
             <div className="h-10 sm:h-14 md:h-16" />
           </motion.div>
