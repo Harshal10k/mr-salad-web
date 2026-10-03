@@ -34,6 +34,22 @@ function MenuPage() {
   // Refs: section id → DOM node
   const sectionRefs = useRef({});
   const isScrollingTo = useRef(false);
+  const catNavRef = useRef(null); // sticky category nav
+  const tabRefs = useRef({});    // per-tab button nodes
+
+  // The navbar auto-hides on scroll, so the cat-nav pins to top-0.
+  // Offset for jump-scrolling = only the sticky cat-nav's own height.
+  const getScrollOffset = useCallback(() => {
+    return catNavRef.current ? catNavRef.current.offsetHeight : 0;
+  }, []);
+
+  // ── SCROLL ACTIVE TAB INTO VIEW ──────────────────────────────
+  useEffect(() => {
+    const btn = tabRefs.current[activeCat];
+    if (btn) {
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  }, [activeCat]);
 
   // ── SCROLL SPY ──────────────────────────────────────────────
   useEffect(() => {
@@ -61,11 +77,11 @@ function MenuPage() {
     if (!el) return;
     setActiveCat(rawName);
     isScrollingTo.current = true;
-    const OFFSET = 62 + 46; // navbar + sticky cat bar
-    const top = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+    const offset = getScrollOffset();
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
     setTimeout(() => { isScrollingTo.current = false; }, 900);
-  }, []);
+  }, [getScrollOffset]);
 
   // ── INITIAL SCROLL to ?cat= param ───────────────────────────
   useEffect(() => {
@@ -96,31 +112,41 @@ function MenuPage() {
           <MenuSearch value={search} onChange={setSearch} />
         </div>
 
-        {/* ── STICKY CATEGORY NAV ── */}
-        <nav
-          aria-label="Menu categories"
-          className="sticky top-[62px] z-20 flex items-center gap-0 overflow-x-auto no-scrollbar bg-brand-cream border-b border-brand-black/10 mt-6 shadow-sm"
-        >
-          {ALL_SECTIONS.map((sec) => {
-            const isActive = activeCat === sec.rawName;
-            return (
-              <button
-                key={sec.id}
-                onClick={() => scrollToSection(sec.rawName)}
-                className={`
-                  relative shrink-0 px-5 py-3.5 text-[11px] font-bold tracking-[0.16em] uppercase
-                  transition-colors duration-200 whitespace-nowrap cursor-pointer
-                  ${isActive ? 'text-brand-green' : 'text-brand-black/38 hover:text-brand-black/65'}
-                `}
-              >
-                {sec.rawName}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-green rounded-full" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
+        {/* ── STICKY CATEGORY NAV (wrapped for right-fade affordance) ── */}
+        <div className="relative sticky top-0 z-20 mt-6">
+          <nav
+            ref={catNavRef}
+            aria-label="Menu categories"
+            className="flex items-center gap-0 overflow-x-auto no-scrollbar bg-brand-cream border-b border-brand-black/10 shadow-sm"
+          >
+            {ALL_SECTIONS.map((sec) => {
+              const isActive = activeCat === sec.rawName;
+              return (
+                <button
+                  key={sec.id}
+                  ref={(el) => { tabRefs.current[sec.rawName] = el; }}
+                  onClick={() => scrollToSection(sec.rawName)}
+                  className={`
+                    relative shrink-0 px-5 py-3.5 text-[11px] font-bold tracking-[0.16em] uppercase
+                    transition-colors duration-200 whitespace-nowrap cursor-pointer
+                    ${isActive ? 'text-brand-green' : 'text-brand-black/38 hover:text-brand-black/65'}
+                  `}
+                >
+                  {sec.rawName}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-green rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right-edge fade: pointer-events-none so it doesn't block taps */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-brand-cream to-transparent"
+          />
+        </div>
 
         {/* ── CATEGORY SECTIONS ── */}
         <div className="space-y-20 pt-12 pb-24">
@@ -160,7 +186,7 @@ function MenuPage() {
                 {sec.isCustomSalad ? (
                   <CustomSaladPanel />
                 ) : items.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
                     {items.map((item) => (
                       <MenuCard key={item.id} item={item} />
                     ))}

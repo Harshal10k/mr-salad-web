@@ -8,107 +8,110 @@ const FoodDiscoverySection = () => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const scrollSectionRef = useRef(null);
-  const navRef = useRef(null);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener('resize', checkMobile, { passive: true });
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  // ── Scroll track refs ─────────────────────────────────────────
+  const desktopScrollRef = useRef(null); // lg+ pinned track
+  const mobileScrollRef  = useRef(null); // <lg pinned track
+  const navRef           = useRef(null);
+  const tabButtonRefs    = useRef({});   // per-category nav button
 
   const isProgrammaticScroll = useRef(false);
-  const scrollTimeoutRef = useRef(null);
+  const scrollTimeoutRef     = useRef(null);
 
   useEffect(() => {
-    return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Scroll tracking for desktop category transitions
-  const { scrollYProgress } = useScroll({
-    target: scrollSectionRef,
+  useEffect(() => () => {
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+  }, []);
+
+  // ── Desktop scroll progress ───────────────────────────────────
+  const { scrollYProgress: desktopProgress } = useScroll({
+    target: desktopScrollRef,
     offset: ['start start', 'end end'],
   });
 
+  // ── Mobile scroll progress ────────────────────────────────────
+  const { scrollYProgress: mobileProgress } = useScroll({
+    target: mobileScrollRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Drive activeIndex from desktop scroll
   useEffect(() => {
     if (isMobile) return;
-    const unsubscribe = scrollYProgress.on('change', (progress) => {
+    const unsub = desktopProgress.on('change', (p) => {
       if (isProgrammaticScroll.current) return;
-      // Map 0 -> 1 progress into 6 category indices
-      const index = Math.min(categories.length - 1, Math.max(0, Math.floor(progress * categories.length)));
-      setActiveIndex(index);
+      setActiveIndex(Math.min(categories.length - 1, Math.max(0, Math.floor(p * categories.length))));
     });
-    return () => unsubscribe();
-  }, [scrollYProgress, isMobile]);
+    return unsub;
+  }, [desktopProgress, isMobile]);
 
+  // Drive activeIndex from mobile scroll
+  useEffect(() => {
+    if (!isMobile) return;
+    const unsub = mobileProgress.on('change', (p) => {
+      if (isProgrammaticScroll.current) return;
+      setActiveIndex(Math.min(categories.length - 1, Math.max(0, Math.floor(p * categories.length))));
+    });
+    return unsub;
+  }, [mobileProgress, isMobile]);
+
+  // ── Scroll active tab into center view ───────────────────────
+  useEffect(() => {
+    tabButtonRefs.current[activeIndex]?.scrollIntoView({
+      behavior: 'smooth', inline: 'center', block: 'nearest',
+    });
+  }, [activeIndex]);
+
+  // ── Jump to category ─────────────────────────────────────────
   const scrollToCategory = (idx) => {
     setActiveIndex(idx);
+    isProgrammaticScroll.current = true;
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 900);
 
-    if (isMobile) {
-      const el = document.getElementById(`mobile-cat-${idx}`);
-      if (el) {
-        const navHeight = navRef.current ? navRef.current.offsetHeight : 60;
-        const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-      return;
-    }
+    const trackRef = isMobile ? mobileScrollRef : desktopScrollRef;
+    if (!trackRef.current) return;
 
-    if (scrollSectionRef.current) {
-      isProgrammaticScroll.current = true;
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      scrollTimeoutRef.current = setTimeout(() => {
-        isProgrammaticScroll.current = false;
-      }, 800);
-
-      const rect = scrollSectionRef.current.getBoundingClientRect();
-      const sectionDocTop = rect.top + window.scrollY;
-      const totalScrollable = Math.max(0, scrollSectionRef.current.offsetHeight - window.innerHeight);
-      const targetProgress = (idx + 0.5) / categories.length;
-      const targetScroll = sectionDocTop + targetProgress * totalScrollable;
-
-      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-    }
+    const rect            = trackRef.current.getBoundingClientRect();
+    const sectionDocTop   = rect.top + window.scrollY;
+    const totalScrollable = Math.max(0, trackRef.current.offsetHeight - window.innerHeight);
+    const targetProgress  = (idx + 0.5) / categories.length;
+    window.scrollTo({ top: sectionDocTop + targetProgress * totalScrollable, behavior: 'smooth' });
   };
 
-  const navigateToCategory = (cat) => {
+  const navigateToCategory = (cat) =>
     navigate(`/menu?cat=${encodeURIComponent(cat.menuCat)}`);
-  };
 
-  const navigateToMenu = () => {
-    navigate('/menu');
-  };
+  const navigateToMenu = () => navigate('/menu');
 
   const activeCategory = categories[activeIndex];
 
   return (
     <section className="relative w-full bg-brand-green text-brand-cream selection:bg-brand-wood selection:text-brand-white">
-      
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 1. SECTION INTRO: WHAT'S ON YOUR PLATE?                      */}
-      {/* ───────────────────────────────────────────────────────────── */}
+
+      {/* ─────────────────────────────────────────────────────── */}
+      {/* 1. SECTION INTRO                                        */}
+      {/* ─────────────────────────────────────────────────────── */}
       <div className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-between px-6 sm:px-12 md:px-20 lg:px-24 pt-28 md:pt-36 pb-16 border-b border-brand-cream/10">
-        
-        {/* Subtle decorative editorial watermark */}
+
         <div className="absolute top-12 right-6 md:right-16 select-none pointer-events-none opacity-5 font-sans text-[10vw] md:text-[8vw] leading-none text-brand-cream font-bold">
           02
         </div>
 
-        {/* Eyebrow Label */}
         <div className="mb-8 md:mb-12">
           <p className="font-sans text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium">
             Food Discovery
           </p>
         </div>
 
-        {/* Oversized Headline */}
         <div className="max-w-6xl">
           <h2 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.92] uppercase text-brand-cream">
             WHAT&apos;S<br />
@@ -117,14 +120,12 @@ const FoodDiscoverySection = () => {
           </h2>
         </div>
 
-        {/* Supporting Text & Divider */}
         <div className="pt-12 md:pt-16 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
           <div className="space-y-1 text-brand-cream/75 font-sans text-sm md:text-base leading-relaxed">
             <p>Fresh food.</p>
             <p>Simple choices.</p>
             <p className="text-brand-cream font-medium">Made for your everyday.</p>
           </div>
-
           <div className="flex items-center gap-3 text-xs md:text-sm font-sans text-brand-cream/40 uppercase tracking-widest">
             <span>Scroll to discover</span>
             <span className="inline-block animate-pulse">↓</span>
@@ -132,9 +133,9 @@ const FoodDiscoverySection = () => {
         </div>
       </div>
 
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 2. MINIMAL TYPOGRAPHIC CATEGORY NAVIGATION                    */}
-      {/* ───────────────────────────────────────────────────────────── */}
+      {/* ─────────────────────────────────────────────────────── */}
+      {/* 2. STICKY TAB STRIP                                     */}
+      {/* ─────────────────────────────────────────────────────── */}
       <nav
         ref={navRef}
         aria-label="Category Navigation"
@@ -144,13 +145,13 @@ const FoodDiscoverySection = () => {
           <span className="hidden md:inline-block font-sans text-xs uppercase tracking-[0.2em] text-brand-cream/40 shrink-0">
             Categories ({categories.length})
           </span>
-
           <div className="flex items-center gap-6 sm:gap-8 md:gap-10 whitespace-nowrap">
             {categories.map((cat, idx) => {
               const isActive = idx === activeIndex;
               return (
                 <button
                   key={cat.id}
+                  ref={(el) => { tabButtonRefs.current[idx] = el; }}
                   onClick={() => scrollToCategory(idx)}
                   className={`group relative text-xs md:text-sm uppercase tracking-[0.15em] font-sans transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
                     isActive ? 'text-brand-cream font-bold' : 'text-brand-cream/50 hover:text-brand-cream/80'
@@ -160,8 +161,6 @@ const FoodDiscoverySection = () => {
                     {cat.number}
                   </span>
                   <span>{cat.rawName}</span>
-
-                  {/* Minimal indicator underline */}
                   {isActive && (
                     <motion.div
                       layoutId="cat-nav-active"
@@ -176,23 +175,19 @@ const FoodDiscoverySection = () => {
         </div>
       </nav>
 
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 3. CATEGORY SCROLL EXPERIENCE                                */}
-      {/* ───────────────────────────────────────────────────────────── */}
-
-      {/* ── DESKTOP PINNED / EDITORIAL LAYOUT (lg+) ── */}
+      {/* ─────────────────────────────────────────────────────── */}
+      {/* 3a. DESKTOP PINNED SCROLL TRACK (lg+)                  */}
+      {/* ─────────────────────────────────────────────────────── */}
       <div
-        ref={scrollSectionRef}
+        ref={desktopScrollRef}
         className="hidden lg:block relative w-full"
         style={{ height: `${categories.length * 90}vh` }}
       >
-        {/* Sticky viewport frame */}
         <div className="sticky top-[61px] h-[calc(100vh-61px)] w-full flex items-center px-12 md:px-20 lg:px-24 overflow-hidden">
           <div className="max-w-7xl w-full mx-auto grid grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left Column: Editorial Category Typography & Details */}
+
+            {/* Left: text */}
             <div className="col-span-5 flex flex-col justify-between py-6 min-h-[480px]">
-              
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeCategory.id}
@@ -202,7 +197,6 @@ const FoodDiscoverySection = () => {
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-6"
                 >
-                  {/* Category Number */}
                   <div className="flex items-center gap-3">
                     <span className="font-sans text-xl text-brand-wood font-medium tracking-wider">
                       {activeCategory.number}
@@ -213,17 +207,14 @@ const FoodDiscoverySection = () => {
                     </span>
                   </div>
 
-                  {/* Category Name Headline */}
                   <h3 className="text-6xl xl:text-7xl font-black tracking-tight leading-[0.95] text-brand-cream uppercase">
                     {activeCategory.name}
                   </h3>
 
-                  {/* Editorial Description */}
                   <p className="text-lg text-brand-cream/80 leading-relaxed max-w-md font-sans">
                     {activeCategory.description}
                   </p>
 
-                  {/* Authentic Menu Samples from menu.json */}
                   <div className="pt-2">
                     <p className="font-sans text-xs uppercase tracking-widest text-brand-cream/40 mb-2">
                       Featured In This Category
@@ -240,7 +231,6 @@ const FoodDiscoverySection = () => {
                     </div>
                   </div>
 
-                  {/* Editorial CTA */}
                   <div className="pt-6">
                     <button
                       onClick={() => navigateToCategory(activeCategory)}
@@ -253,7 +243,7 @@ const FoodDiscoverySection = () => {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Progress dots at bottom of left column */}
+              {/* Progress dots */}
               <div className="flex items-center gap-2 pt-8">
                 {categories.map((c, i) => (
                   <button
@@ -268,10 +258,8 @@ const FoodDiscoverySection = () => {
               </div>
             </div>
 
-            {/* Right Column: Large Editorial Food Photography / Visual */}
+            {/* Right: image crossfade */}
             <div className="col-span-7 relative h-[65vh] xl:h-[70vh] rounded-2xl overflow-hidden bg-brand-dark/40 border border-brand-cream/10 shadow-2xl">
-              
-              {/* Image Stack with Cross-fade and subtle 1.03 -> 1.0 scale */}
               {categories.map((cat, idx) => {
                 const isActive = idx === activeIndex;
                 return (
@@ -285,7 +273,7 @@ const FoodDiscoverySection = () => {
                     }}
                     transition={{
                       opacity: { duration: 0.5, ease: 'easeInOut' },
-                      scale: { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
+                      scale:   { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
                     }}
                     className="absolute inset-0 w-full h-full"
                   >
@@ -295,11 +283,7 @@ const FoodDiscoverySection = () => {
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-
-                    {/* Subtle cinematic vignette */}
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-black/20 pointer-events-none" />
-
-                    {/* Minimal photo tag */}
                     <div className="absolute bottom-6 right-6 font-sans text-xs uppercase tracking-widest text-brand-cream/60 px-3 py-1 bg-brand-dark/60 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
                       MR. SALAD · {cat.number}
                     </div>
@@ -312,102 +296,139 @@ const FoodDiscoverySection = () => {
         </div>
       </div>
 
-      {/* ── MOBILE VERTICAL EXPERIENCE (< lg) ── */}
-      <div className="block lg:hidden px-6 sm:px-12 py-12 space-y-20">
-        {categories.map((cat, idx) => (
-          <div
-            key={cat.id}
-            id={`mobile-cat-${idx}`}
-            className="flex flex-col space-y-6 pt-6 border-t border-brand-cream/10 first:border-none"
-          >
-            {/* Header: Number & Tagline */}
-            <div className="flex items-center gap-3">
-              <span className="font-sans text-lg text-brand-wood font-bold">
-                {cat.number}
-              </span>
-              <span className="h-[1px] w-6 bg-brand-wood/40" />
-              <span className="font-sans text-xs uppercase tracking-wider text-brand-cream/50">
-                {cat.tagline}
-              </span>
-            </div>
+      {/* ─────────────────────────────────────────────────────── */}
+      {/* 3b. MOBILE PINNED SCROLL TRACK (< lg)                  */}
+      {/* ─────────────────────────────────────────────────────── */}
+      <div
+        ref={mobileScrollRef}
+        className="block lg:hidden relative w-full"
+        style={{ height: `${categories.length * 100}svh` }}
+      >
+        {/* Sticky viewport — svh keeps it correct under Safari's collapsible toolbar */}
+        <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col">
 
-            {/* Headline */}
-            <h3 className="text-5xl sm:text-6xl font-black tracking-tight leading-[0.95] text-brand-cream uppercase">
-              {cat.name}
-            </h3>
+          {/* Full-bleed image stack — crossfades behind content */}
+          <div className="absolute inset-0">
+            {categories.map((cat, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <motion.div
+                  key={cat.id}
+                  initial={false}
+                  animate={{
+                    opacity: isActive ? 1 : 0,
+                    scale:   isActive ? 1 : 1.04,
+                    pointerEvents: isActive ? 'auto' : 'none',
+                  }}
+                  transition={{
+                    opacity: { duration: 0.55, ease: 'easeInOut' },
+                    scale:   { duration: 0.8,  ease: [0.25, 1, 0.5, 1] },
+                  }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  <img
+                    src={cat.image}
+                    alt={`Mr. Salad ${cat.name}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  {/* Gradient overlay so text is legible */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-green via-brand-green/70 to-brand-green/20 pointer-events-none" />
+                </motion.div>
+              );
+            })}
+          </div>
 
-            {/* Large Visual Image */}
-            <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-brand-dark/40 border border-brand-cream/10 shadow-lg">
-              <img
-                src={cat.image}
-                alt={`Mr. Salad ${cat.name}`}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/50 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 right-4 font-sans text-[10px] uppercase tracking-widest text-brand-cream/70 px-2.5 py-1 bg-brand-dark/70 backdrop-blur-sm border border-brand-cream/10 rounded-sm">
-                MR. SALAD
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-base text-brand-cream/80 leading-relaxed font-sans">
-              {cat.description}
-            </p>
-
-            {/* Sample Items */}
-            <div className="space-y-2">
-              <p className="font-sans text-[11px] uppercase tracking-widest text-brand-cream/40">
-                Popular Choices
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {cat.sampleItemNames.map((name) => (
-                  <span
-                    key={name}
-                    className="font-sans text-xs px-2 py-0.5 bg-brand-cream/5 border border-brand-cream/10 rounded-sm text-brand-cream/70"
-                  >
-                    {name}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="pt-2">
-              <button
-                onClick={() => navigateToCategory(cat)}
-                className="group inline-flex items-center gap-2.5 text-sm font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
+          {/* Foreground content — crossfades with AnimatePresence */}
+          <div className="relative z-10 flex flex-col justify-end h-full px-6 sm:px-10 pb-14 pt-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCategory.id}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                className="space-y-4"
               >
-                <span>{cat.cta}</span>
-                <ArrowRight className="w-4 h-4 text-brand-wood transition-transform group-hover:translate-x-1.5" />
-              </button>
+                {/* Number + tagline */}
+                <div className="flex items-center gap-3">
+                  <span className="font-sans text-base text-brand-wood font-bold tracking-wider">
+                    {activeCategory.number}
+                  </span>
+                  <span className="h-[1px] w-5 bg-brand-wood/40" />
+                  <span className="font-sans text-[11px] uppercase tracking-wider text-brand-cream/50">
+                    {activeCategory.tagline}
+                  </span>
+                </div>
+
+                {/* Headline */}
+                <h3 className="text-4xl sm:text-5xl font-black tracking-tight leading-[0.95] text-brand-cream uppercase">
+                  {activeCategory.name}
+                </h3>
+
+                {/* Description — 2 lines max */}
+                <p className="text-sm text-brand-cream/75 leading-relaxed font-sans line-clamp-2 max-w-sm">
+                  {activeCategory.description}
+                </p>
+
+                {/* Sample chips — max 4, one row */}
+                <div className="flex flex-wrap gap-1.5">
+                  {activeCategory.sampleItemNames.slice(0, 4).map((name) => (
+                    <span
+                      key={name}
+                      className="font-sans text-[11px] px-2.5 py-0.5 bg-brand-cream/8 border border-brand-cream/15 rounded-sm text-brand-cream/70 whitespace-nowrap"
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => navigateToCategory(activeCategory)}
+                  className="group inline-flex items-center gap-2 text-sm font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors pt-1"
+                >
+                  <span>{activeCategory.cta}</span>
+                  <ArrowRight className="w-4 h-4 text-brand-wood transition-transform group-hover:translate-x-1.5" />
+                </button>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Progress dots */}
+            <div className="flex items-center gap-2 mt-8">
+              {categories.map((c, i) => (
+                <button
+                  key={c.id}
+                  onClick={() => scrollToCategory(i)}
+                  aria-label={`Jump to ${c.name}`}
+                  className={`h-1 transition-all duration-300 rounded-full cursor-pointer ${
+                    i === activeIndex ? 'w-6 bg-brand-wood' : 'w-1.5 bg-brand-cream/20 hover:bg-brand-cream/40'
+                  }`}
+                />
+              ))}
             </div>
           </div>
-        ))}
+
+        </div>
       </div>
 
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 4. TRANSITION TO NEXT SECTION / FINALE                        */}
-      {/* ───────────────────────────────────────────────────────────── */}
+      {/* ─────────────────────────────────────────────────────── */}
+      {/* 4. FINALE                                               */}
+      {/* ─────────────────────────────────────────────────────── */}
       <div className="relative border-t border-brand-cream/10 px-6 sm:px-12 md:px-20 lg:px-24 py-28 md:py-36 flex flex-col items-center text-center overflow-hidden">
-        
-        {/* Subtle background ambient graphic */}
+
         <div className="absolute inset-0 pointer-events-none opacity-5 flex items-center justify-center select-none">
-          <span className="font-sans text-[18vw] font-black text-brand-cream leading-none">
-            MENU
-          </span>
+          <span className="font-sans text-[18vw] font-black text-brand-cream leading-none">MENU</span>
         </div>
 
         <div className="relative z-10 max-w-4xl flex flex-col items-center">
           <p className="font-sans text-xs md:text-sm tracking-[0.25em] text-brand-wood uppercase font-medium mb-6">
             The Complete Selection
           </p>
-
           <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.92] text-brand-cream uppercase mb-12">
             FIND YOUR<br />
             FAVOURITE.
           </h2>
-
           <button
             onClick={navigateToMenu}
             className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 bg-brand-cream text-brand-green font-sans font-bold text-sm md:text-base tracking-[0.15em] uppercase rounded-full hover:bg-brand-wood hover:text-brand-white transition-all duration-300 shadow-xl"
