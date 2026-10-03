@@ -18,6 +18,17 @@ const FoodDiscoverySection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const isProgrammaticScroll = useRef(false);
+  const scrollTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // Scroll tracking for desktop category transitions
   const { scrollYProgress } = useScroll({
     target: scrollSectionRef,
@@ -27,6 +38,7 @@ const FoodDiscoverySection = () => {
   useEffect(() => {
     if (isMobile) return;
     const unsubscribe = scrollYProgress.on('change', (progress) => {
+      if (isProgrammaticScroll.current) return;
       // Map 0 -> 1 progress into 6 category indices
       const index = Math.min(categories.length - 1, Math.max(0, Math.floor(progress * categories.length)));
       setActiveIndex(index);
@@ -35,15 +47,33 @@ const FoodDiscoverySection = () => {
   }, [scrollYProgress, isMobile]);
 
   const scrollToCategory = (idx) => {
+    setActiveIndex(idx);
+
     if (isMobile) {
       const el = document.getElementById(`mobile-cat-${idx}`);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const navHeight = navRef.current ? navRef.current.offsetHeight : 60;
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
-    } else if (scrollSectionRef.current) {
-      const top = scrollSectionRef.current.offsetTop;
-      const height = scrollSectionRef.current.offsetHeight;
-      const targetScroll = top + (idx / categories.length) * (height - window.innerHeight);
+      return;
+    }
+
+    if (scrollSectionRef.current) {
+      isProgrammaticScroll.current = true;
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 800);
+
+      const rect = scrollSectionRef.current.getBoundingClientRect();
+      const sectionDocTop = rect.top + window.scrollY;
+      const totalScrollable = Math.max(0, scrollSectionRef.current.offsetHeight - window.innerHeight);
+      const targetProgress = (idx + 0.5) / categories.length;
+      const targetScroll = sectionDocTop + targetProgress * totalScrollable;
+
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
   };

@@ -26,7 +26,10 @@ export function getItemDescription(item) {
     return 'Crisp seasonal greens and balanced whole foods.';
   }
   if (item.category === 'Bowls') {
-    return 'Thick, chilled nutrient-rich smoothie bowl topped with seeds.';
+    if (name.includes('smoothie')) {
+      return 'Thick, chilled nutrient-rich smoothie bowl topped with seeds.';
+    }
+    return 'Warm, wholesome brown rice power bowl packed with balanced nutrients.';
   }
   if (item.category === 'Juices') {
     return 'Freshly pressed cold juice with zero added refined sugar.';
@@ -77,7 +80,7 @@ const CATEGORY_CONFIG = [
     description: 'Thick nutrient-dense smoothie bowls crafted with whole fruits.',
     cta: 'Explore Smoothie Bowls',
     image: '/images/categories/bowls.jpg',
-    menuCat: 'Bowls',
+    menuCat: 'Smoothie Bowls',
     filter: (item) => item.category.toLowerCase() === 'bowls' && item.name.toLowerCase().includes('smoothie'),
   },
   {

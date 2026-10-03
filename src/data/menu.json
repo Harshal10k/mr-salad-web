@@ -207,6 +207,71 @@
       "description": "Hand-cut seasonal fruits tossed with natural citrus dressing, mint leaves, and chia seeds.",
       "image": "fruit-salad.jpg"
     },
+    {
+      "id": "chickpea-power-brown-rice-bowl",
+      "name": "Chickpea Power Brown Rice Bowl",
+      "category": "Bowls",
+      "price": 169,
+      "veg": true,
+      "cal": 485,
+      "protein": 22.4,
+      "fat": 11.8,
+      "carb": 72.5,
+      "description": "Steamed fiber-rich brown rice paired with seasoned protein chickpeas, crisp garden veggies, microgreens, and clean house herb dressing.",
+      "image": "chickpea-power-brown-rice-bowl.jpg"
+    },
+    {
+      "id": "black-chana-power-brown-rice-bowl",
+      "name": "Black Chana Power Brown Rice Bowl",
+      "category": "Bowls",
+      "price": 169,
+      "veg": true,
+      "cal": 512,
+      "protein": 23.8,
+      "fat": 13.2,
+      "carb": 74.1,
+      "description": "Nutrient-dense boiled desi black chana served over a bed of warm brown rice, tossed with diced cucumber, tomatoes, onions, and zesty lemon dressing.",
+      "image": "black-chana-power-brown-rice-bowl.jpg"
+    },
+    {
+      "id": "soya-paneer-power-brown-rice-bowl",
+      "name": "Soya Paneer Power Brown Rice Bowl",
+      "category": "Bowls",
+      "price": 179,
+      "veg": true,
+      "cal": 538,
+      "protein": 31.5,
+      "fat": 16.4,
+      "carb": 66.2,
+      "description": "High-protein power bowl combining marinated soya chunks and fresh cottage cheese cubes over steamed brown rice with crunchy bell peppers and herbs.",
+      "image": "soya-paneer-power-brown-rice-bowl.jpg"
+    },
+    {
+      "id": "paneer-bhurji-power-brown-rice-bowl",
+      "name": "Paneer Bhurji Power Brown Rice Bowl",
+      "category": "Bowls",
+      "price": 179,
+      "veg": true,
+      "cal": 525,
+      "protein": 26.2,
+      "fat": 21.8,
+      "carb": 56.0,
+      "description": "Savory spiced crumbled paneer bhurji cooked with onions, tomatoes, and green chillies, served alongside aromatic steamed brown rice and fresh greens.",
+      "image": "paneer-bhurji-power-brown-rice-bowl.jpg"
+    },
+    {
+      "id": "grilled-chickpea-paneer-power-brown-rice-bowl",
+      "name": "Grilled Chickpea Paneer Power Brown Rice Bowl",
+      "category": "Bowls",
+      "price": 189,
+      "veg": true,
+      "cal": 565,
+      "protein": 29.8,
+      "fat": 18.5,
+      "carb": 70.2,
+      "description": "Wholesome power bowl featuring herb-grilled paneer and spiced roasted chickpeas served over brown rice with crisp seasonal veggies and date-tamarind vinaigrette.",
+      "image": "grilled-chickpea-paneer-power-brown-rice-bowl.jpg"
+    },
 
     {
       "id": "blush-smoothie",
