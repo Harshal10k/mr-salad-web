@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { ZOMATO_URL, BRAND } from '../config/brand';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -102,7 +104,7 @@ const Navbar = () => {
                 className="flex flex-col gap-2 px-6 pb-6 pt-2 border-t border-black/5 text-brand-black"
               >
                 <button
-                  onClick={() => scrollTo('menu')}
+                  onClick={() => { setIsOpen(false); navigate('/menu'); }}
                   className="text-lg font-bold tracking-tight hover:text-brand-green transition-colors py-1.5 text-left"
                 >
                   Menu

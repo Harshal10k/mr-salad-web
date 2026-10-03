@@ -1,7 +1,7 @@
 import menuData from './menu.json';
 
 /**
- * Editorial Category definitions aligned with the new homepage structure:
+ * Editorial Category definitions aligned with the homepage structure:
  * - Salads
  * - Bowls
  * - Smoothie Bowls (mapped from menu.json 'Bowls' smoothies without altering source data)
@@ -48,48 +48,72 @@ const CATEGORY_CONFIG = [
     id: 'salads',
     number: '01',
     name: 'SALADS',
+    rawName: 'Salads',
     tagline: 'The Greens & Proteins',
     description: 'Fresh, filling and made for everyday nutrition.',
+    cta: 'Explore Salads',
+    image: '/images/categories/salads.jpg',
+    menuCat: 'Salads',
     filter: (item) => item.category.toLowerCase() === 'salads',
   },
   {
     id: 'bowls',
     number: '02',
     name: 'BOWLS',
+    rawName: 'Bowls',
     tagline: 'Warm Grains & Wholesome Bases',
     description: 'Wholesome balanced rice and grain bowls.',
+    cta: 'Explore Bowls',
+    image: '/images/categories/bowls.jpg',
+    menuCat: 'Bowls',
     filter: (item) => item.category.toLowerCase() === 'bowls' && !item.name.toLowerCase().includes('smoothie'),
   },
   {
     id: 'smoothie-bowls',
     number: '03',
     name: 'SMOOTHIE BOWLS',
+    rawName: 'Smoothie Bowls',
     tagline: 'Superfood & Fruit Purees',
     description: 'Thick nutrient-dense smoothie bowls crafted with whole fruits.',
+    cta: 'Explore Smoothie Bowls',
+    image: '/images/categories/bowls.jpg',
+    menuCat: 'Bowls',
     filter: (item) => item.category.toLowerCase() === 'bowls' && item.name.toLowerCase().includes('smoothie'),
   },
   {
     id: 'between-bread',
     number: '04',
     name: 'BETWEEN BREAD',
+    rawName: 'Between Bread',
     tagline: 'Warm Artisanal Toasts',
     description: 'Whole-grain toasts and warm, satisfying high-protein fillings.',
+    cta: 'Explore Between Bread',
+    image: '/images/categories/between-bread.jpg',
+    menuCat: 'Between Bread',
     filter: (item) => item.category.toLowerCase() === 'between bread',
   },
   {
     id: 'snacks',
     number: '05',
     name: 'SNACKS',
+    rawName: 'Snacks',
     tagline: 'Clean Light Bites',
     description: 'Air-fried, steamed, and protein-packed home-style snacks.',
+    cta: 'Explore Snacks',
+    image: '/images/categories/snacks.jpg',
+    menuCat: 'Snacks',
     filter: (item) => item.category.toLowerCase() === 'snacks',
   },
   {
     id: 'juices',
     number: '06',
     name: 'JUICES',
+    rawName: 'Juices',
     tagline: 'Cold-Pressed Vitality',
     description: 'Fresh raw juices and booster shots with zero added sugar.',
+    cta: 'Explore Juices',
+    image: '/images/categories/juices.jpg',
+    menuCat: 'Juices',
     filter: (item) => item.category.toLowerCase() === 'juices' || item.category.toLowerCase() === 'get going',
   },
 ];
@@ -106,10 +130,15 @@ export const categories = CATEGORY_CONFIG.map((cat) => {
     id: cat.id,
     number: cat.number,
     name: cat.name,
+    rawName: cat.rawName,
     tagline: cat.tagline,
     description: cat.description,
+    cta: cat.cta,
+    image: cat.image,
+    menuCat: cat.menuCat,
     items,
     totalCount: items.length,
+    sampleItemNames: items.slice(0, 4).map((i) => i.name),
   };
 });
 

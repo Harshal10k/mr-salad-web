@@ -4,19 +4,20 @@ import Navbar from './components/Navbar';
 import PageLoader from './components/PageLoader';
 import HeroSection from './sections/HeroSection';
 import UspStripSection from './sections/UspStripSection';
-import FullMenuSection from './sections/FullMenuSection';
+import FoodDiscoverySection from './sections/FoodDiscoverySection';
 import SubscriptionSection from './sections/SubscriptionSection';
 import HowItWorksSection from './sections/HowItWorksSection';
 import TestimonialsSection from './sections/TestimonialsSection';
 import FaqSection from './sections/FaqSection';
 import Footer from './components/Footer';
+import MenuPage from './pages/MenuPage';
 
 function HomePage() {
   return (
     <>
       <HeroSection />
       <UspStripSection />
-      <FullMenuSection />
+      <FoodDiscoverySection />
       <SubscriptionSection />
       <HowItWorksSection />
       <TestimonialsSection />
@@ -33,13 +34,8 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/menu" element={<RedirectToMenu />} />
+        <Route path="/menu" element={<MenuPage />} />
       </Routes>
     </div>
   );
-}
-
-function RedirectToMenu() {
-  React.useEffect(() => { window.location.replace('/#menu'); }, []);
-  return null;
 }

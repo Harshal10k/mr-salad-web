@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MenuSearch = ({ value, onChange }) => (
-  <div className="relative mb-8 max-w-sm">
+  <div className="relative mb-8 w-full">
     <svg
       className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-black/30 pointer-events-none"
       fill="none"
@@ -17,12 +17,11 @@ const MenuSearch = ({ value, onChange }) => (
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder="Search the menu..."
+      placeholder="Search salad, bowl, snack..."
       className="w-full pl-10 pr-4 py-3 text-sm bg-white border border-brand-black/10 rounded-xl
         placeholder:text-brand-black/30 text-brand-black
         focus:outline-none focus:border-brand-green/50 focus:ring-2 focus:ring-brand-green/10
-        transition-all duration-200"
-    />
+        transition-all duration-200" />
     {value && (
       <button
         onClick={() => onChange('')}

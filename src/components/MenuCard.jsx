@@ -2,92 +2,105 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import VegBadge from './VegBadge';
 
-const MenuCard = ({ item, onOpen }) => {
+const MenuCard = ({ item }) => {
   const [imgError, setImgError] = useState(false);
   const hasNutrition = item.cal != null || item.protein != null || item.fat != null || item.carb != null;
-  const imageSrc = item.image ? (item.image.startsWith('http') ? item.image : `/images/${item.image}`) : '';
+  const imageSrc = item.image
+    ? item.image.startsWith('http')
+      ? item.image
+      : `/images/${item.image}`
+    : '';
   const showFallback = imgError || !imageSrc;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.3 }}
-      onClick={() => onOpen?.(item)}
-      className="group flex flex-col justify-between h-full bg-brand-white rounded-2xl border border-brand-black/8 hover:border-brand-black/20 p-4 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onOpen?.(item)}
-      aria-label={`View details for ${item.name}`}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.28 }}
+      className="group flex flex-col bg-white rounded-xl overflow-hidden shadow-[0_1px_6px_rgba(0,0,0,0.07)] hover:shadow-[0_4px_18px_rgba(0,0,0,0.11)] transition-shadow duration-300"
     >
-      <div>
-        {/* Food Image */}
-        <div className={`relative overflow-hidden rounded-xl bg-brand-cream aspect-[4/3] mb-3.5 ${showFallback ? 'border border-brand-green/25' : ''}`}>
-          {showFallback ? (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-brand-cream p-4">
-              <img
-                src="/images/logo.jpg"
-                alt="Mr. Salad"
-                className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xs border border-brand-green/25"
-              />
-            </div>
-          ) : (
+      {/* ── Food image ─────────────────────────────── */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-brand-cream">
+        {showFallback ? (
+          <div className="w-full h-full flex items-center justify-center bg-brand-cream">
             <img
-              src={imageSrc}
-              alt={item.name}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-              onError={() => setImgError(true)}
+              src="/images/logo.jpg"
+              alt="Mr. Salad"
+              className="w-12 h-12 rounded-full object-cover border border-brand-green/20 opacity-50"
             />
-          )}
-          <div className="absolute top-2.5 left-2.5">
-            <VegBadge isVeg={item.veg} />
           </div>
+        ) : (
+          <img
+            src={imageSrc}
+            alt={item.name}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            onError={() => setImgError(true)}
+          />
+        )}
+        {/* Veg / Non-veg badge */}
+        <div className="absolute top-2.5 left-2.5">
+          <VegBadge isVeg={item.veg} />
         </div>
+      </div>
 
-        {/* Title & Price */}
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-display text-base md:text-lg font-bold text-brand-black tracking-tight leading-snug group-hover:text-brand-green transition-colors">
+      {/* ── Card body ──────────────────────────────── */}
+      <div className="flex flex-col flex-1 p-4 gap-2">
+
+        {/* Name + Price */}
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-sans text-[14px] font-bold text-brand-black leading-snug tracking-tight">
             {item.name}
           </h3>
-          <span className="font-display text-base md:text-lg font-semibold text-brand-green shrink-0">
+          <span className="font-sans text-[14px] font-bold text-brand-black shrink-0 leading-snug">
             ₹{item.price}
           </span>
         </div>
 
-        {/* Short Description */}
+        {/* Description — up to 3 lines */}
         {item.description && (
-          <p className="text-xs text-brand-black/55 line-clamp-2 leading-relaxed mb-3">
+          <p className="text-[11.5px] text-brand-black/45 leading-relaxed line-clamp-3">
             {item.description}
           </p>
         )}
 
-        {/* Calories, Protein, Fat, Carbs (Only display if not null) */}
+        {/* Nutrition */}
         {hasNutrition && (
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-brand-black/50 font-medium py-1.5 border-t border-brand-black/5">
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] font-medium leading-relaxed">
             {item.cal != null && (
-              <span><strong className="text-brand-black/80 font-bold">{item.cal}</strong> kcal</span>
+              <span style={{ color: '#2d6a2d' }}>
+                <strong>{item.cal}</strong> kcal
+              </span>
             )}
             {item.protein != null && (
-              <span><strong className="text-brand-black/80 font-bold">{item.protein}g</strong> protein</span>
+              <span style={{ color: '#2d6a2d' }}>
+                <strong>{item.protein}g</strong> protein
+              </span>
             )}
             {item.fat != null && (
-              <span><strong className="text-brand-black/80 font-bold">{item.fat}g</strong> fat</span>
+              <span style={{ color: '#c2410c' }}>
+                <strong>{item.fat}g</strong> fat
+              </span>
             )}
             {item.carb != null && (
-              <span><strong className="text-brand-black/80 font-bold">{item.carb}g</strong> carbs</span>
+              <span style={{ color: '#1d4ed8' }}>
+                <strong>{item.carb}g</strong> carbs
+              </span>
             )}
           </div>
         )}
-      </div>
 
-      {/* Button: VIEW / ORDER ↗ */}
-      <div className="mt-4 pt-3 border-t border-brand-black/5 flex items-center justify-between">
-        <span className="text-[11px] font-bold tracking-wider uppercase text-brand-green group-hover:text-brand-dark transition-colors flex items-center gap-1">
-          VIEW / ORDER <span className="text-xs">↗</span>
-        </span>
-        <span className="text-[10px] text-brand-black/35 font-medium">Zomato / Swiggy</span>
+        {/* VIEW / ORDER + platform links */}
+        <div className="mt-auto pt-3 border-t border-black/[0.06] flex items-center justify-between">
+          <span className="text-[11px] font-bold tracking-wider uppercase text-brand-green">
+            VIEW / ORDER <span className="text-[10px]">↗</span>
+          </span>
+          <span className="text-[10px] text-brand-black/28 font-medium">
+            Zomato / Swiggy
+          </span>
+        </div>
+
       </div>
     </motion.article>
   );

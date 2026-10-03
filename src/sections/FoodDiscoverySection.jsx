@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import categories from '../data/categories';
 
 const FoodDiscoverySection = () => {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const scrollSectionRef = useRef(null);
@@ -46,16 +48,12 @@ const FoodDiscoverySection = () => {
     }
   };
 
-  const scrollToMenuCategory = (catId) => {
-    const el = document.getElementById(`menu-${catId}`);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  const navigateToCategory = (cat) => {
+    navigate(`/menu?cat=${encodeURIComponent(cat.menuCat)}`);
   };
 
-  const scrollToFullMenu = () => {
-    const el = document.getElementById('full-menu');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const navigateToMenu = () => {
+    navigate('/menu');
   };
 
   const activeCategory = categories[activeIndex];
@@ -215,7 +213,7 @@ const FoodDiscoverySection = () => {
                   {/* Editorial CTA */}
                   <div className="pt-6">
                     <button
-                      onClick={() => scrollToMenuCategory(activeCategory.id)}
+                      onClick={() => navigateToCategory(activeCategory)}
                       className="group inline-flex items-center gap-3 text-base font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
                     >
                       <span>{activeCategory.cta}</span>
@@ -347,7 +345,7 @@ const FoodDiscoverySection = () => {
             {/* CTA */}
             <div className="pt-2">
               <button
-                onClick={() => scrollToMenuCategory(cat.id)}
+                onClick={() => navigateToCategory(cat)}
                 className="group inline-flex items-center gap-2.5 text-sm font-bold font-sans tracking-wider uppercase text-brand-cream hover:text-brand-wood transition-colors"
               >
                 <span>{cat.cta}</span>
@@ -381,7 +379,7 @@ const FoodDiscoverySection = () => {
           </h2>
 
           <button
-            onClick={scrollToFullMenu}
+            onClick={navigateToMenu}
             className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 bg-brand-cream text-brand-green font-sans font-bold text-sm md:text-base tracking-[0.15em] uppercase rounded-full hover:bg-brand-wood hover:text-brand-white transition-all duration-300 shadow-xl"
           >
             <span>VIEW FULL MENU</span>

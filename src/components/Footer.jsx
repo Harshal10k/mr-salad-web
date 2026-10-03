@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BRAND, ZOMATO_URL, SWIGGY_URL, getWhatsAppEnquiryUrl } from '../config/brand';
 
 export default function Footer() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -96,7 +98,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm text-brand-black/55">
               <li>
-                <button onClick={() => scrollTo('menu')} className="hover:text-brand-green transition-colors text-left">
+                <button onClick={() => navigate('/menu')} className="hover:text-brand-green transition-colors text-left">
                   Menu
                 </button>
               </li>
