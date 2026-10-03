@@ -17,6 +17,7 @@ const FoodDiscoverySection = () => {
 
   const isProgrammaticScroll = useRef(false);
   const scrollTimeoutRef     = useRef(null);
+  const isFirstMount         = useRef(true); // skip tab-center on initial render
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -62,10 +63,19 @@ const FoodDiscoverySection = () => {
   }, [mobileProgress, isMobile]);
 
   // ── Scroll active tab into center view ───────────────────────
+  // Uses container-only scrollLeft math so the page window is never moved.
+  // Skipped on initial mount so the browser doesn't jump down to the tab strip.
   useEffect(() => {
-    tabButtonRefs.current[activeIndex]?.scrollIntoView({
-      behavior: 'smooth', inline: 'center', block: 'nearest',
-    });
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    const button    = tabButtonRefs.current[activeIndex];
+    const container = navRef.current; // the <nav> itself is the scroll container
+    if (!button || !container) return;
+    // Center the active button inside the nav strip without touching window scroll
+    const targetLeft = button.offsetLeft - container.clientWidth / 2 + button.clientWidth / 2;
+    container.scrollTo({ left: targetLeft, behavior: 'smooth' });
   }, [activeIndex]);
 
   // ── Jump to category ─────────────────────────────────────────
