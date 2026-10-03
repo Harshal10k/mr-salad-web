@@ -95,7 +95,10 @@ const FoodDiscoverySection = () => {
   const activeCategory = categories[activeIndex];
 
   return (
-    <section className="relative w-full bg-brand-green text-brand-cream selection:bg-brand-wood selection:text-brand-white">
+    <section
+      id="food-discovery"
+      className="relative w-full bg-brand-green text-brand-cream selection:bg-brand-wood selection:text-brand-white"
+    >
 
       {/* ─────────────────────────────────────────────────────── */}
       {/* 1. SECTION INTRO                                        */}

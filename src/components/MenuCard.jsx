@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import VegBadge from './VegBadge';
 
-const MenuCard = ({ item }) => {
+const MenuCard = ({ item, onOpen, onClick }) => {
   const [imgError, setImgError] = useState(false);
+
+  const handleClick = () => {
+    if (onOpen) onOpen(item);
+    else if (onClick) onClick(item);
+  };
 
   const hasNutrition =
     item.cal != null || item.protein != null || item.fat != null || item.carb != null;
@@ -52,7 +57,16 @@ const MenuCard = ({ item }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.26 }}
-      className="group bg-white rounded-xl overflow-hidden shadow-[0_1px_6px_rgba(0,0,0,0.07)] hover:shadow-[0_4px_18px_rgba(0,0,0,0.11)] transition-shadow duration-300"
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+      className="group bg-white rounded-xl overflow-hidden shadow-[0_1px_6px_rgba(0,0,0,0.07)] hover:shadow-[0_4px_18px_rgba(0,0,0,0.11)] transition-shadow duration-300 cursor-pointer select-none"
     >
       {/* ── MOBILE: horizontal row (< sm) ───────────────────────────────────── */}
       <div className="flex sm:hidden items-start gap-3 p-3">
