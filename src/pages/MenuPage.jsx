@@ -3,7 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import MenuHeader from '../components/MenuHeader';
 import MenuCard from '../components/MenuCard';
 import MenuSearch from '../components/MenuSearch';
+import ItemDetailModal from '../components/ItemDetailModal';
 import { categories as categoryData, CREATE_YOUR_SALAD_DATA } from '../data/categories';
+import menuData from '../data/menu.json';
 
 // Build a flat list of sections: each category from categories.js + the custom salad section
 const ALL_SECTIONS = [
@@ -30,6 +32,7 @@ function MenuPage() {
   const [activeCat, setActiveCat] = useState(
     searchParams.get('cat') || ALL_SECTIONS[0]?.rawName || ''
   );
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // Refs: section id → DOM node
   const sectionRefs = useRef({});
@@ -188,7 +191,11 @@ function MenuPage() {
                 ) : items.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
                     {items.map((item) => (
-                      <MenuCard key={item.id} item={item} />
+                      <MenuCard
+                        key={item.id}
+                        item={item}
+                        onOpen={(it) => setSelectedItem(it)}
+                      />
                     ))}
                   </div>
                 ) : (
@@ -200,6 +207,15 @@ function MenuPage() {
         </div>
 
       </div>
+
+      {/* ── DETAIL MODAL ── */}
+      {selectedItem && (
+        <ItemDetailModal
+          item={selectedItem}
+          addOns={selectedItem.category === 'Bowls' ? menuData.addOns : []}
+          onClose={() => setSelectedItem(null)}
+        />
+      )}
     </main>
   );
 }

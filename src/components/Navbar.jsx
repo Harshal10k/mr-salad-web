@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ZOMATO_URL, BRAND } from '../config/brand';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  // When navigating from a non-home route, store the target section id here
+  // so we can scroll once the home page has rendered.
+  const [pendingScroll, setPendingScroll] = useState(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -30,11 +34,42 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen]);
 
+  // After navigating to '/', execute the deferred scroll once the page renders.
+  useEffect(() => {
+    if (pendingScroll && location.pathname === '/') {
+      const timer = setTimeout(() => {
+        if (pendingScroll === 'top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const el = document.getElementById(pendingScroll);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setPendingScroll(null);
+      }, 120); // one paint delay so home sections are in the DOM
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, pendingScroll]);
+
+  const goToHome = () => {
+    setIsOpen(false);
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setPendingScroll('top');
+      navigate('/');
+    }
+  };
+
   const scrollTo = (id) => {
     setIsOpen(false);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (location.pathname === '/') {
+      // Already on home page — scroll immediately.
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // On another route — navigate home first, then scroll once mounted.
+      setPendingScroll(id);
+      navigate('/');
     }
   };
 
@@ -55,7 +90,7 @@ const Navbar = () => {
           <div className="flex h-[46px] items-center justify-between px-3">
             {/* Left: Brand logo */}
             <button
-              onClick={() => scrollTo('hero')}
+              onClick={goToHome}
               aria-label="Home"
               className="flex h-7 w-7 items-center justify-center rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 flex-shrink-0 border border-black/5"
             >
@@ -68,7 +103,7 @@ const Navbar = () => {
 
             {/* Center: Brand name in clean bold uppercase */}
             <button
-              onClick={() => scrollTo('hero')}
+              onClick={goToHome}
               className="font-display text-[13px] font-extrabold tracking-[0.14em] uppercase text-brand-black hover:opacity-75 transition-opacity"
             >
               MR. SALAD

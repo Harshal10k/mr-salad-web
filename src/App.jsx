@@ -10,11 +10,13 @@ import HowItWorksSection from './sections/HowItWorksSection';
 import TestimonialsSection from './sections/TestimonialsSection';
 import FaqSection from './sections/FaqSection';
 import Footer from './components/Footer';
+import ScrollProgressPill from './components/ScrollProgressPill';
 import MenuPage from './pages/MenuPage';
 
 function HomePage() {
   return (
     <>
+      <ScrollProgressPill />
       <HeroSection />
       <UspStripSection />
       <FoodDiscoverySection />
