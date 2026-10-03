@@ -34,11 +34,15 @@ const HeroSection = () => {
   const buttonOpacity = useTransform(scrollY, [0, 200], [1, 0]);
   const buttonPointerEvents = useTransform(scrollY, (y) => (y >= 200 ? 'none' : 'auto'));
 
+  // Mobile only: in-video buttons start hidden on load (video card is still mid-screen)
+  // and fade IN as the user scrolls, then fade out normally with buttonOpacity timing.
+  const mobileInnerButtonOpacity = useTransform(scrollY, [0, 120, 200], [0, 1, 0]);
+
   // 'Good Food. Good Energy.' fades away smoothly by 800px scroll
   const headlineOpacity = useTransform(scrollY, [500, 800], [1, 0]);
 
   // Initial video card offset from screen top (starts below the text + space)
-  const initialOffset = isMobile ? 220 : 590;
+  const initialOffset = isMobile ? 353 : 590;
 
   // Video card rises up to cover the full viewport
   const videoTop = useTransform(scrollYProgress, [0, 0.28], [initialOffset, 0]);
@@ -228,8 +232,9 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Dual CTAs (Fade away by 200px scroll) */}
+            {/* Mobile: start hidden so buttons don't show while video card is still low */}
             <motion.div
-              style={{ opacity: buttonOpacity, pointerEvents: buttonPointerEvents }}
+              style={{ opacity: isMobile ? mobileInnerButtonOpacity : buttonOpacity, pointerEvents: buttonPointerEvents }}
               className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
             >
               <button
