@@ -6,7 +6,7 @@ const CategoryNav = ({ categories, active, onSelect }) => {
   return (
     <nav
       ref={navRef}
-      className="flex items-center gap-0 overflow-x-auto no-scrollbar border-b border-brand-black/10 mb-6"
+      className="sticky top-[62px] z-20 flex items-center gap-0 overflow-x-auto no-scrollbar bg-brand-cream border-b border-brand-black/10 mb-6 shadow-sm"
       aria-label="Menu categories"
     >
       {categories.map((cat) => {

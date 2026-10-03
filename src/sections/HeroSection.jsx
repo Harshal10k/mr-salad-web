@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const videoRef = useRef(null);
@@ -147,7 +149,7 @@ const HeroSection = () => {
             className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
             <button
-              onClick={() => scrollTo('menu')}
+              onClick={() => navigate('/menu')}
               className="px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wider uppercase bg-brand-green text-white hover:bg-brand-dark transition-all duration-200 shadow-md hover:scale-105 active:scale-95"
             >
               Explore Menu
@@ -234,7 +236,7 @@ const HeroSection = () => {
               className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
             >
               <button
-                onClick={() => scrollTo('menu')}
+                onClick={() => navigate('/menu')}
                 className="px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wider uppercase bg-white text-brand-black hover:bg-brand-cream transition-all duration-200 shadow-lg hover:scale-105 active:scale-95"
               >
                 Explore Menu
