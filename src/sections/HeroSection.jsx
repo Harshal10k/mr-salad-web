@@ -174,7 +174,7 @@ const HeroSection = () => {
             left: videoPaddingX,
             right: videoPaddingX,
             borderRadius: videoRadius,
-            height: '100svh',
+            height: '100%',
           }}
           className="absolute z-10 overflow-hidden bg-black shadow-2xl"
         >
