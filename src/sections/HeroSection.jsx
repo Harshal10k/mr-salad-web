@@ -38,7 +38,7 @@ const HeroSection = () => {
   const headlineOpacity = useTransform(scrollY, [500, 800], [1, 0]);
 
   // Initial video card offset from screen top (starts below the text + space)
-  const initialOffset = isMobile ? 490 : 590;
+  const initialOffset = isMobile ? 220 : 590;
 
   // Video card rises up to cover the full viewport
   const videoTop = useTransform(scrollYProgress, [0, 0.28], [initialOffset, 0]);
@@ -62,9 +62,8 @@ const HeroSection = () => {
 
   const renderRotatingBadge = (isDark = false) => (
     <div
-      className={`absolute right-4 sm:right-8 md:right-12 lg:right-20 top-20 sm:top-24 md:top-28 pointer-events-none z-10 transition-all duration-300 ${
-        isDark ? 'text-white' : 'text-brand-black'
-      }`}
+      className={`absolute right-4 sm:right-8 md:right-12 lg:right-20 top-20 sm:top-24 md:top-28 pointer-events-none z-10 transition-all duration-300 ${isDark ? 'text-white' : 'text-brand-black'
+        }`}
       aria-hidden="true"
     >
       <div className="relative flex items-center justify-center">
@@ -79,9 +78,8 @@ const HeroSection = () => {
             />
           </defs>
           <text
-            className={`text-[9.5px] font-sans uppercase tracking-[0.24em] font-bold ${
-              isDark ? 'fill-white/80' : 'fill-brand-black/70'
-            }`}
+            className={`text-[9.5px] font-sans uppercase tracking-[0.24em] font-bold ${isDark ? 'fill-white/80' : 'fill-brand-black/70'
+              }`}
           >
             <textPath href={isDark ? "#badgeCircleDark" : "#badgeCircleLight"} startOffset="0%">
               • MR. SALAD • THE DIET STUDIO • NAGPUR •
@@ -91,11 +89,10 @@ const HeroSection = () => {
 
         {/* Center emblem */}
         <div
-          className={`absolute inset-0 m-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border shadow-xs ${
-            isDark
-              ? 'bg-white/10 border-white/20 text-brand-cream'
-              : 'bg-brand-cream border-brand-black/10 text-brand-green'
-          }`}
+          className={`absolute inset-0 m-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border shadow-xs ${isDark
+            ? 'bg-white/10 border-white/20 text-brand-cream'
+            : 'bg-brand-cream border-brand-black/10 text-brand-green'
+            }`}
         >
           <span className="text-xs">🥗</span>
         </div>
